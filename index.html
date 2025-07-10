@@ -6,88 +6,96 @@
     <title>Sistema de Controle Financeiro Familiar</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=FuykDwv-3jxIKsvEKfv_2kGzcc8cx6kkseqlM4aVB97q5qMuFoAk2EO2hFgDvrN3tfg7sJM26YjE_cdn3s_wTKjJXDTcLyqzI5ekR8ba6L3hpaX2ej7Q35CPSSOmDwBGNaaieB26gmNW7ZeWjo5GdNAVpPs-BUtqQdr47yH6Gi0BVo-Cq94CgUuNCD7rMorJAkF4RSmnukkKmWxiKm5h5aCiazRgaSwTousD2mEpKUzOmE4ImIOqduW1xKa01HLihSBVT3sSY_qIlVcpJDSMwbY0u1BM1FoDOAA0k8pnfYbTA3769Qq86priH63Vh7SSFi1lfXpUG39Cx9CFA89Qa3q-2Ssp0nlDhS5MSFDt5pVgiU1VsVkAxQKGz0VDyQS4iVVUZoMghCcBGexCMWTusj1HIxgo9_AH9RwI2i9pRkjbCexwR2thskV_cV_8NNhi" charset="UTF-8"></script><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=D2sVeCh8Q7V_v4whJFdhfsML_V32ee7hsdCYXlUbuZ1CCMQtSqcrfGDP5pSOZrADHNuxQhMJYO1bDJsxXUFl8-DNldClrWXJa5koEm7CK4kOLAqrcNRzp3zHMK1yaV-TLr5GIFgHNLUNAs7OVZHOxWlv9K5PJsA3D583xrWCwXYEWeZ8ObmDvetw6PgIilUNyuucDhhlCNXM49gqqReaAhexgIu7syDvvLjCDJujaZP8yraiuiFfaGdjJARDNLnujQTeqa6Nx_Dfqk0c24AwIPbcT_0aVXjxzT5ztn5Pv3JvZninf6qbTWcnUTf4v2QjRRTkNAuV3SaH81YtYu46gTAcoG4Vrk7n558KwtC_bcF2DIajfqyYGxOUwN_ndvPcOsHQ6oD0EsKV1Um8DCiLfi9mzWhSmgQXke_Ngv_RNyU8ZBwcg09TBeCkTVYpn1I9rErO-9QwCWd1stuBRwgopg" charset="UTF-8"></script><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .gradient-purple { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
         .gradient-blue { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
         .gradient-orange { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
         .gradient-green { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .tab-active { background-color: #4f46e5; color: white; }
+        .tab-inactive { background-color: #e5e7eb; color: #6b7280; }
         .chart-container { height: 400px; }
+        .btn-success { background-color: #10b981; color: white; }
+        .btn-danger { background-color: #ef4444; color: white; }
+        .btn-primary { background-color: #3b82f6; color: white; }
+        .btn-secondary { background-color: #6b7280; color: white; }
+        .progress-bar { height: 8px; background-color: #e5e7eb; border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; background-color: #10b981; transition: width 0.3s ease; }
     </style>
 </head>
 <body class="bg-gray-100">
     <!-- Header -->
-    <header class="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6 shadow-lg">
+    <header class="gradient-purple text-white p-6 shadow-lg">
         <div class="container mx-auto">
             <h1 class="text-3xl font-bold flex items-center">
                 <i class="fas fa-chart-line mr-3"></i>
                 Sistema de Controle Financeiro Familiar
             </h1>
-            <p class="text-purple-100 mt-2">Gerencie suas finanças de forma inteligente e visual</p>
+            <p class="text-blue-200 mt-2">Gerencie suas finanças de forma inteligente e visual</p>
         </div>
     </header>
 
     <!-- Navigation -->
-    <nav class="bg-white shadow-md">
-        <div class="container mx-auto px-6">
-            <div class="flex space-x-8">
-                <button class="nav-btn active py-4 px-6 text-blue-600 border-b-2 border-blue-600 font-semibold" data-tab="dashboard">
+    <nav class="bg-white shadow-md p-4">
+        <div class="container mx-auto">
+            <div class="flex space-x-2 overflow-x-auto">
+                <button class="tab-button tab-active px-4 py-2 rounded-lg font-medium transition-all duration-200" data-tab="dashboard">
                     <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
                 </button>
-                <button class="nav-btn py-4 px-6 text-gray-600 hover:text-blue-600 font-semibold" data-tab="gastos">
+                <button class="tab-button tab-inactive px-4 py-2 rounded-lg font-medium transition-all duration-200" data-tab="gastos">
                     <i class="fas fa-shopping-cart mr-2"></i>Gastos
                 </button>
-                <button class="nav-btn py-4 px-6 text-gray-600 hover:text-blue-600 font-semibold" data-tab="gastos-fixos">
+                <button class="tab-button tab-inactive px-4 py-2 rounded-lg font-medium transition-all duration-200" data-tab="gastos-fixos">
                     <i class="fas fa-home mr-2"></i>Gastos Fixos
                 </button>
-                <button class="nav-btn py-4 px-6 text-gray-600 hover:text-blue-600 font-semibold" data-tab="rendas">
-                    <i class="fas fa-dollar-sign mr-2"></i>Rendas
+                <button class="tab-button tab-inactive px-4 py-2 rounded-lg font-medium transition-all duration-200" data-tab="rendas">
+                    <i class="fas fa-money-bill-wave mr-2"></i>Rendas
                 </button>
-                <button class="nav-btn py-4 px-6 text-gray-600 hover:text-blue-600 font-semibold" data-tab="poupanca">
+                <button class="tab-button tab-inactive px-4 py-2 rounded-lg font-medium transition-all duration-200" data-tab="poupanca">
                     <i class="fas fa-piggy-bank mr-2"></i>Poupança
                 </button>
-                <button class="nav-btn py-4 px-6 text-gray-600 hover:text-blue-600 font-semibold" data-tab="metas">
-                    <i class="fas fa-target mr-2"></i>Metas
+                <button class="tab-button tab-inactive px-4 py-2 rounded-lg font-medium transition-all duration-200" data-tab="metas">
+                    <i class="fas fa-bullseye mr-2"></i>Metas
                 </button>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <main class="container mx-auto px-6 py-8">
+    <main class="container mx-auto p-6">
         <!-- Dashboard Tab -->
         <div id="dashboard" class="tab-content">
-            <!-- Filters -->
-            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-                <h2 class="text-xl font-semibold mb-4">Filtros</h2>
+            <!-- Filtros -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h2 class="text-xl font-bold mb-4">Filtros</h2>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Ano</label>
-                        <select id="filter-year" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
-                            <!-- Anos serão gerados automaticamente -->
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Ano</label>
+                        <select id="filter-year" class="w-full p-2 border border-gray-300 rounded-lg">
+                            <!-- Gerado automaticamente -->
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Mês</label>
-                        <select id="filter-month" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Mês</label>
+                        <select id="filter-month" class="w-full p-2 border border-gray-300 rounded-lg">
                             <option value="">Todos</option>
-                            <option value="01">Janeiro</option>
-                            <option value="02">Fevereiro</option>
-                            <option value="03">Março</option>
-                            <option value="04">Abril</option>
-                            <option value="05">Maio</option>
-                            <option value="06">Junho</option>
-                            <option value="07">Julho</option>
-                            <option value="08">Agosto</option>
-                            <option value="09">Setembro</option>
+                            <option value="1">Janeiro</option>
+                            <option value="2">Fevereiro</option>
+                            <option value="3">Março</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Maio</option>
+                            <option value="6">Junho</option>
+                            <option value="7">Julho</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Setembro</option>
                             <option value="10">Outubro</option>
                             <option value="11">Novembro</option>
                             <option value="12">Dezembro</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Categoria</label>
-                        <select id="filter-category" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Categoria</label>
+                        <select id="filter-category" class="w-full p-2 border border-gray-300 rounded-lg">
                             <option value="">Todas</option>
                             <option value="Alimentação">Alimentação</option>
                             <option value="Transporte">Transporte</option>
@@ -99,57 +107,66 @@
                         </select>
                     </div>
                     <div class="flex items-end">
-                        <button id="apply-filters" class="w-full bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition-colors">
+                        <button id="apply-filters" class="btn-secondary px-4 py-2 rounded-lg w-full">
                             <i class="fas fa-filter mr-2"></i>Aplicar Filtros
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Summary Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div class="gradient-purple rounded-lg p-6 text-white">
-                    <h3 class="text-lg font-semibold mb-2">Renda Total</h3>
-                    <p class="text-3xl font-bold" id="total-renda">R$ 0,00</p>
-                    <i class="fas fa-arrow-up text-green-300 text-2xl float-right"></i>
+            <!-- Cards de Resumo -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                <div class="gradient-purple text-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-blue-200 text-sm">Renda Total</p>
+                            <p class="text-2xl font-bold" id="total-renda">R$ 0,00</p>
+                        </div>
+                        <i class="fas fa-arrow-up text-3xl text-blue-200"></i>
+                    </div>
                 </div>
-                <div class="gradient-blue rounded-lg p-6 text-white">
-                    <h3 class="text-lg font-semibold mb-2">Total Poupado</h3>
-                    <p class="text-3xl font-bold" id="total-poupado">R$ 0,00</p>
-                    <i class="fas fa-piggy-bank text-blue-300 text-2xl float-right"></i>
+                <div class="gradient-blue text-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-blue-200 text-sm">Total Poupado</p>
+                            <p class="text-2xl font-bold" id="total-poupado">R$ 0,00</p>
+                        </div>
+                        <i class="fas fa-piggy-bank text-3xl text-blue-200"></i>
+                    </div>
                 </div>
-                <div class="gradient-orange rounded-lg p-6 text-white">
-                    <h3 class="text-lg font-semibold mb-2">Total Gastos</h3>
-                    <p class="text-3xl font-bold" id="total-gastos">R$ 0,00</p>
-                    <i class="fas fa-shopping-cart text-red-300 text-2xl float-right"></i>
+                <div class="gradient-orange text-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-pink-200 text-sm">Total Gastos</p>
+                            <p class="text-2xl font-bold" id="total-gastos">R$ 0,00</p>
+                        </div>
+                        <i class="fas fa-shopping-cart text-3xl text-pink-200"></i>
+                    </div>
                 </div>
-                <div class="gradient-green rounded-lg p-6 text-white">
-                    <h3 class="text-lg font-semibold mb-2">Saldo Atual</h3>
-                    <p class="text-3xl font-bold" id="saldo-atual">R$ 0,00</p>
-                    <i class="fas fa-wallet text-green-300 text-2xl float-right"></i>
+                <div class="gradient-green text-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-blue-200 text-sm">Saldo Atual</p>
+                            <p class="text-2xl font-bold" id="saldo-atual">R$ 0,00</p>
+                        </div>
+                        <i class="fas fa-wallet text-3xl text-blue-200"></i>
+                    </div>
                 </div>
             </div>
 
-            <!-- Charts -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-lg font-semibold mb-4">Gastos por Categoria</h3>
+            <!-- Gráficos -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-lg font-bold mb-4">Gastos por Categoria</h3>
                     <div class="chart-container">
-                        <canvas id="category-chart"></canvas>
+                        <canvas id="gastos-categoria-chart"></canvas>
                     </div>
                 </div>
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-lg font-semibold mb-4">Evolução da Poupança</h3>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-lg font-bold mb-4">Evolução da Poupança</h3>
                     <div class="chart-container">
-                        <canvas id="savings-chart"></canvas>
+                        <canvas id="evolucao-poupanca-chart"></canvas>
                     </div>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h3 class="text-lg font-semibold mb-4">Gastos Fixos vs Variáveis</h3>
-                <div class="chart-container">
-                    <canvas id="expenses-chart"></canvas>
                 </div>
             </div>
         </div>
@@ -157,15 +174,15 @@
         <!-- Gastos Tab -->
         <div id="gastos" class="tab-content hidden">
             <div class="bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-xl font-semibold mb-4">Controle de Gastos</h2>
+                <h2 class="text-xl font-bold mb-4">Controle de Gastos</h2>
                 
-                <!-- Add Expense Form -->
+                <!-- Formulário de Adição -->
                 <div class="mb-6 p-4 bg-gray-50 rounded-lg">
                     <h3 class="text-lg font-semibold mb-4">Adicionar Gasto</h3>
                     <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-                        <input type="date" id="gasto-data" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
-                        <input type="text" id="gasto-descricao" placeholder="Descrição" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
-                        <select id="gasto-categoria" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                        <input type="date" id="gasto-data" class="p-2 border border-gray-300 rounded-lg">
+                        <input type="text" id="gasto-descricao" placeholder="Descrição" class="p-2 border border-gray-300 rounded-lg">
+                        <select id="gasto-categoria" class="p-2 border border-gray-300 rounded-lg">
                             <option value="">Selecione</option>
                             <option value="Alimentação">Alimentação</option>
                             <option value="Transporte">Transporte</option>
@@ -175,8 +192,8 @@
                             <option value="Educação">Educação</option>
                             <option value="Outros">Outros</option>
                         </select>
-                        <input type="number" id="gasto-valor" placeholder="Valor" step="0.01" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
-                        <select id="gasto-forma" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                        <input type="number" id="gasto-valor" placeholder="Valor" class="p-2 border border-gray-300 rounded-lg" step="0.01">
+                        <select id="gasto-forma-pagamento" class="p-2 border border-gray-300 rounded-lg">
                             <option value="">Forma de Pagamento</option>
                             <option value="Dinheiro">Dinheiro</option>
                             <option value="Cartão de Crédito">Cartão de Crédito</option>
@@ -185,26 +202,67 @@
                             <option value="Boleto">Boleto</option>
                         </select>
                     </div>
-                    <button id="add-gasto" class="mt-4 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors">
+                    <button id="adicionar-gasto" class="btn-success px-4 py-2 rounded-lg mt-4">
                         <i class="fas fa-plus mr-2"></i>Adicionar Gasto
                     </button>
                 </div>
 
-                <!-- Expenses List -->
+                <!-- Lista de Gastos -->
                 <div class="overflow-x-auto">
-                    <table class="min-w-full bg-white">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descrição</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoria</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valor</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Forma de Pagamento</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                    <table class="w-full table-auto">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="px-4 py-2 text-left">Data</th>
+                                <th class="px-4 py-2 text-left">Descrição</th>
+                                <th class="px-4 py-2 text-left">Categoria</th>
+                                <th class="px-4 py-2 text-left">Valor</th>
+                                <th class="px-4 py-2 text-left">Forma de Pagamento</th>
+                                <th class="px-4 py-2 text-left">Ações</th>
                             </tr>
                         </thead>
-                        <tbody id="gastos-list" class="bg-white divide-y divide-gray-200">
-                            <!-- Expenses will be populated here -->
+                        <tbody id="gastos-lista">
+                            <!-- Gastos serão inseridos aqui -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gastos Fixos Tab -->
+        <div id="gastos-fixos" class="tab-content hidden">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold mb-4">Controle de Gastos Fixos</h2>
+                
+                <!-- Formulário de Adição -->
+                <div class="mb-6 p-4 bg-gray-50 rounded-lg">
+                    <h3 class="text-lg font-semibold mb-4">Adicionar Gasto Fixo</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                        <input type="text" id="gasto-fixo-item" placeholder="Item" class="p-2 border border-gray-300 rounded-lg">
+                        <input type="number" id="gasto-fixo-valor" placeholder="Valor Mensal" class="p-2 border border-gray-300 rounded-lg" step="0.01">
+                        <input type="date" id="gasto-fixo-inicio" class="p-2 border border-gray-300 rounded-lg">
+                        <input type="date" id="gasto-fixo-fim" class="p-2 border border-gray-300 rounded-lg">
+                        <input type="text" id="gasto-fixo-observacoes" placeholder="Observações" class="p-2 border border-gray-300 rounded-lg">
+                    </div>
+                    <button id="adicionar-gasto-fixo" class="btn-success px-4 py-2 rounded-lg mt-4">
+                        <i class="fas fa-plus mr-2"></i>Adicionar Gasto Fixo
+                    </button>
+                </div>
+
+                <!-- Lista de Gastos Fixos -->
+                <div class="overflow-x-auto">
+                    <table class="w-full table-auto">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="px-4 py-2 text-left">Item</th>
+                                <th class="px-4 py-2 text-left">Valor Mensal</th>
+                                <th class="px-4 py-2 text-left">Data de Início</th>
+                                <th class="px-4 py-2 text-left">Data de Fim</th>
+                                <th class="px-4 py-2 text-left">Observações</th>
+                                <th class="px-4 py-2 text-left">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="gastos-fixos-lista">
+                            <!-- Gastos fixos serão inseridos aqui -->
                         </tbody>
                     </table>
                 </div>
@@ -214,31 +272,31 @@
         <!-- Rendas Tab -->
         <div id="rendas" class="tab-content hidden">
             <div class="bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-xl font-semibold mb-4">Controle de Rendas</h2>
+                <h2 class="text-xl font-bold mb-4">Controle de Rendas</h2>
                 
-                <!-- Add Income Form -->
+                <!-- Formulário de Adição -->
                 <div class="mb-6 p-4 bg-gray-50 rounded-lg">
                     <h3 class="text-lg font-semibold mb-4">Adicionar Renda</h3>
                     <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-                        <select id="renda-mes" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                        <select id="renda-mes" class="p-2 border border-gray-300 rounded-lg">
                             <option value="">Mês</option>
-                            <option value="01">Janeiro</option>
-                            <option value="02">Fevereiro</option>
-                            <option value="03">Março</option>
-                            <option value="04">Abril</option>
-                            <option value="05">Maio</option>
-                            <option value="06">Junho</option>
-                            <option value="07">Julho</option>
-                            <option value="08">Agosto</option>
-                            <option value="09">Setembro</option>
+                            <option value="1">Janeiro</option>
+                            <option value="2">Fevereiro</option>
+                            <option value="3">Março</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Maio</option>
+                            <option value="6">Junho</option>
+                            <option value="7">Julho</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Setembro</option>
                             <option value="10">Outubro</option>
                             <option value="11">Novembro</option>
                             <option value="12">Dezembro</option>
                         </select>
-                        <select id="renda-ano" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
-                            <!-- Anos serão gerados automaticamente -->
+                        <select id="renda-ano" class="p-2 border border-gray-300 rounded-lg">
+                            <!-- Gerado automaticamente -->
                         </select>
-                        <select id="renda-tipo" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                        <select id="renda-tipo" class="p-2 border border-gray-300 rounded-lg">
                             <option value="">Tipo de Renda</option>
                             <option value="Salário Titular">Salário Titular</option>
                             <option value="Salário Cônjuge">Salário Cônjuge</option>
@@ -247,28 +305,28 @@
                             <option value="Bonificação">Bonificação</option>
                             <option value="Outros">Outros</option>
                         </select>
-                        <input type="number" id="renda-valor" placeholder="Valor" step="0.01" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
-                        <input type="text" id="renda-descricao" placeholder="Descrição" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                        <input type="number" id="renda-valor" placeholder="Valor" class="p-2 border border-gray-300 rounded-lg" step="0.01">
+                        <input type="text" id="renda-descricao" placeholder="Descrição" class="p-2 border border-gray-300 rounded-lg">
                     </div>
-                    <button id="add-renda" class="mt-4 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors">
+                    <button id="adicionar-renda" class="btn-success px-4 py-2 rounded-lg mt-4">
                         <i class="fas fa-plus mr-2"></i>Adicionar Renda
                     </button>
                 </div>
 
-                <!-- Income List -->
+                <!-- Lista de Rendas -->
                 <div class="overflow-x-auto">
-                    <table class="min-w-full bg-white">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mês/Ano</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valor</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descrição</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                    <table class="w-full table-auto">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="px-4 py-2 text-left">Mês/Ano</th>
+                                <th class="px-4 py-2 text-left">Tipo</th>
+                                <th class="px-4 py-2 text-left">Valor</th>
+                                <th class="px-4 py-2 text-left">Descrição</th>
+                                <th class="px-4 py-2 text-left">Ações</th>
                             </tr>
                         </thead>
-                        <tbody id="rendas-list" class="bg-white divide-y divide-gray-200">
-                            <!-- Income will be populated here -->
+                        <tbody id="rendas-lista">
+                            <!-- Rendas serão inseridas aqui -->
                         </tbody>
                     </table>
                 </div>
@@ -278,41 +336,41 @@
         <!-- Poupança Tab -->
         <div id="poupanca" class="tab-content hidden">
             <div class="bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-xl font-semibold mb-4">Controle de Poupança</h2>
+                <h2 class="text-xl font-bold mb-4">Controle de Poupança</h2>
                 
-                <!-- Add Savings Form -->
+                <!-- Formulário de Adição -->
                 <div class="mb-6 p-4 bg-gray-50 rounded-lg">
                     <h3 class="text-lg font-semibold mb-4">Adicionar Movimentação</h3>
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <input type="date" id="poupanca-data" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
-                        <select id="poupanca-tipo" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                        <input type="date" id="poupanca-data" class="p-2 border border-gray-300 rounded-lg">
+                        <select id="poupanca-tipo" class="p-2 border border-gray-300 rounded-lg">
                             <option value="">Tipo</option>
                             <option value="Depósito">Depósito</option>
                             <option value="Retirada">Retirada</option>
                         </select>
-                        <input type="number" id="poupanca-valor" placeholder="Valor" step="0.01" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
-                        <input type="text" id="poupanca-descricao" placeholder="Descrição" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                        <input type="number" id="poupanca-valor" placeholder="Valor" class="p-2 border border-gray-300 rounded-lg" step="0.01">
+                        <input type="text" id="poupanca-descricao" placeholder="Descrição" class="p-2 border border-gray-300 rounded-lg">
                     </div>
-                    <button id="add-poupanca" class="mt-4 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors">
+                    <button id="adicionar-poupanca" class="btn-success px-4 py-2 rounded-lg mt-4">
                         <i class="fas fa-plus mr-2"></i>Adicionar Movimentação
                     </button>
                 </div>
 
-                <!-- Savings List -->
+                <!-- Lista de Movimentações -->
                 <div class="overflow-x-auto">
-                    <table class="min-w-full bg-white">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valor</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Saldo</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descrição</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                    <table class="w-full table-auto">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="px-4 py-2 text-left">Data</th>
+                                <th class="px-4 py-2 text-left">Tipo</th>
+                                <th class="px-4 py-2 text-left">Valor</th>
+                                <th class="px-4 py-2 text-left">Saldo</th>
+                                <th class="px-4 py-2 text-left">Descrição</th>
+                                <th class="px-4 py-2 text-left">Ações</th>
                             </tr>
                         </thead>
-                        <tbody id="poupanca-list" class="bg-white divide-y divide-gray-200">
-                            <!-- Savings will be populated here -->
+                        <tbody id="poupanca-lista">
+                            <!-- Movimentações serão inseridas aqui -->
                         </tbody>
                     </table>
                 </div>
@@ -322,196 +380,161 @@
         <!-- Metas Tab -->
         <div id="metas" class="tab-content hidden">
             <div class="bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-xl font-semibold mb-4">Controle de Metas</h2>
+                <h2 class="text-xl font-bold mb-4">Controle de Metas</h2>
                 
-                <!-- Add Goal Form -->
+                <!-- Formulário de Adição -->
                 <div class="mb-6 p-4 bg-gray-50 rounded-lg">
                     <h3 class="text-lg font-semibold mb-4">Adicionar Meta</h3>
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <input type="text" id="meta-nome" placeholder="Nome da Meta" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
-                        <input type="number" id="meta-valor-alvo" placeholder="Valor Alvo" step="0.01" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
-                        <input type="number" id="meta-valor-atual" placeholder="Valor Atual" step="0.01" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
-                        <input type="date" id="meta-data-limite" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                        <input type="text" id="meta-nome" placeholder="Nome da Meta" class="p-2 border border-gray-300 rounded-lg">
+                        <input type="number" id="meta-valor-alvo" placeholder="Valor Alvo" class="p-2 border border-gray-300 rounded-lg" step="0.01">
+                        <input type="number" id="meta-valor-atual" placeholder="Valor Atual" class="p-2 border border-gray-300 rounded-lg" step="0.01">
+                        <input type="date" id="meta-data-limite" class="p-2 border border-gray-300 rounded-lg">
                     </div>
-                    <button id="add-meta" class="mt-4 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors">
+                    <button id="adicionar-meta" class="btn-success px-4 py-2 rounded-lg mt-4">
                         <i class="fas fa-plus mr-2"></i>Adicionar Meta
                     </button>
                 </div>
 
-                <!-- Goals List -->
-                <div class="space-y-4" id="metas-list">
-                    <!-- Goals will be populated here -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Gastos Fixos Tab -->
-        <div id="gastos-fixos" class="tab-content hidden">
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-xl font-semibold mb-4">Controle de Gastos Fixos</h2>
-                
-                <!-- Add Fixed Expense Form -->
-                <div class="mb-6 p-4 bg-gray-50 rounded-lg">
-                    <h3 class="text-lg font-semibold mb-4">Adicionar Gasto Fixo</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-                        <input type="text" id="gasto-fixo-item" placeholder="Item" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
-                        <input type="number" id="gasto-fixo-valor" placeholder="Valor Mensal" step="0.01" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
-                        <input type="date" id="gasto-fixo-inicio" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
-                        <input type="date" id="gasto-fixo-fim" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
-                        <input type="text" id="gasto-fixo-obs" placeholder="Observações" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
-                    </div>
-                    <button id="add-gasto-fixo" class="mt-4 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors">
-                        <i class="fas fa-plus mr-2"></i>Adicionar Gasto Fixo
-                    </button>
-                </div>
-
-                <!-- Fixed Expenses List -->
-                <div class="overflow-x-auto">
-                    <table class="min-w-full bg-white">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valor Mensal</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data de Início</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data de Fim</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Observações</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="gastos-fixos-list" class="bg-white divide-y divide-gray-200">
-                            <!-- Fixed expenses will be populated here -->
-                        </tbody>
-                    </table>
+                <!-- Lista de Metas -->
+                <div id="metas-lista">
+                    <!-- Metas serão inseridas aqui -->
                 </div>
             </div>
         </div>
     </main>
 
     <script>
-        // Data Storage
-        let data = {
-            gastos: JSON.parse(localStorage.getItem('gastos')) || [],
-            rendas: JSON.parse(localStorage.getItem('rendas')) || [],
-            poupanca: JSON.parse(localStorage.getItem('poupanca')) || [],
-            metas: JSON.parse(localStorage.getItem('metas')) || [],
-            gastosFixos: JSON.parse(localStorage.getItem('gastosFixos')) || []
-        };
+        // Dados do sistema
+        let gastos = JSON.parse(localStorage.getItem('gastos')) || [];
+        let gastosFix = JSON.parse(localStorage.getItem('gastosFix')) || [];
+        let rendas = JSON.parse(localStorage.getItem('rendas')) || [];
+        let poupanca = JSON.parse(localStorage.getItem('poupanca')) || [];
+        let metas = JSON.parse(localStorage.getItem('metas')) || [];
 
-        // Initialize Application
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeYearSelectors();
-            initializeEventListeners();
-            renderAllTabs();
-            updateDashboard();
-        });
-
-        // Generate years automatically
-        function initializeYearSelectors() {
-            const currentYear = new Date().getFullYear();
-            const years = [];
+        // Gerar anos automaticamente
+        function gerarAnos() {
+            const anoAtual = new Date().getFullYear();
+            const selectYear = document.getElementById('filter-year');
+            const selectRendaAno = document.getElementById('renda-ano');
             
-            // Generate current year + next 10 years
+            selectYear.innerHTML = '';
+            selectRendaAno.innerHTML = '';
+            
             for (let i = 0; i <= 10; i++) {
-                years.push(currentYear + i);
+                const ano = anoAtual + i;
+                const option1 = new Option(ano, ano);
+                const option2 = new Option(ano, ano);
+                selectYear.add(option1);
+                selectRendaAno.add(option2);
             }
-
-            // Populate filter year
-            const filterYear = document.getElementById('filter-year');
-            filterYear.innerHTML = '<option value="">Todos</option>';
-            years.forEach(year => {
-                const option = document.createElement('option');
-                option.value = year;
-                option.textContent = year;
-                if (year === currentYear) {
-                    option.selected = true;
-                }
-                filterYear.appendChild(option);
-            });
-
-            // Populate renda year
-            const rendaYear = document.getElementById('renda-ano');
-            rendaYear.innerHTML = '<option value="">Ano</option>';
-            years.forEach(year => {
-                const option = document.createElement('option');
-                option.value = year;
-                option.textContent = year;
-                if (year === currentYear) {
-                    option.selected = true;
-                }
-                rendaYear.appendChild(option);
-            });
+            
+            selectYear.value = anoAtual;
         }
 
-        // Event Listeners
-        function initializeEventListeners() {
-            // Navigation
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const tabName = this.getAttribute('data-tab');
-                    showTab(tabName);
-                });
-            });
-
-            // Filters
-            document.getElementById('apply-filters').addEventListener('click', updateDashboard);
-
-            // Add buttons
-            document.getElementById('add-gasto').addEventListener('click', addGasto);
-            document.getElementById('add-renda').addEventListener('click', addRenda);
-            document.getElementById('add-poupanca').addEventListener('click', addPoupanca);
-            document.getElementById('add-meta').addEventListener('click', addMeta);
-            document.getElementById('add-gasto-fixo').addEventListener('click', addGastoFixo);
-
-            // Set current date
-            document.getElementById('gasto-data').valueAsDate = new Date();
-            document.getElementById('poupanca-data').valueAsDate = new Date();
+        // Função para salvar dados
+        function salvarDados() {
+            localStorage.setItem('gastos', JSON.stringify(gastos));
+            localStorage.setItem('gastosFix', JSON.stringify(gastosFix));
+            localStorage.setItem('rendas', JSON.stringify(rendas));
+            localStorage.setItem('poupanca', JSON.stringify(poupanca));
+            localStorage.setItem('metas', JSON.stringify(metas));
         }
 
-        // Tab Management
-        function showTab(tabName) {
+        // Função para formatar moeda
+        function formatarMoeda(valor) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(valor);
+        }
+
+        // Função para obter data atual
+        function obterDataAtual() {
+            const hoje = new Date();
+            return hoje.toISOString().split('T')[0];
+        }
+
+        // Função para alternar abas
+        function alternarAba(tabName) {
+            // Ocultar todas as abas
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.add('hidden');
             });
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active', 'text-blue-600', 'border-b-2', 'border-blue-600');
-                btn.classList.add('text-gray-600');
-            });
-
+            
+            // Mostrar aba selecionada
             document.getElementById(tabName).classList.remove('hidden');
-            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active', 'text-blue-600', 'border-b-2', 'border-blue-600');
-            document.querySelector(`[data-tab="${tabName}"]`).classList.remove('text-gray-600');
+            
+            // Atualizar botões
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('tab-active');
+                btn.classList.add('tab-inactive');
+            });
+            
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('tab-active');
+            document.querySelector(`[data-tab="${tabName}"]`).classList.remove('tab-inactive');
         }
 
-        // Add Functions
-        function addGasto() {
-            const data_input = document.getElementById('gasto-data').value;
+        // Função para adicionar gasto
+        function adicionarGasto() {
+            const data = document.getElementById('gasto-data').value;
             const descricao = document.getElementById('gasto-descricao').value;
             const categoria = document.getElementById('gasto-categoria').value;
             const valor = parseFloat(document.getElementById('gasto-valor').value);
-            const forma = document.getElementById('gasto-forma').value;
+            const formaPagamento = document.getElementById('gasto-forma-pagamento').value;
 
-            if (!data_input || !descricao || !categoria || !valor || !forma) {
-                alert('Por favor, preencha todos os campos!');
+            if (!data || !descricao || !categoria || !valor || !formaPagamento) {
+                alert('Por favor, preencha todos os campos');
                 return;
             }
 
-            const gasto = {
+            gastos.push({
                 id: Date.now(),
-                data: data_input,
+                data,
                 descricao,
                 categoria,
                 valor,
-                forma
-            };
+                formaPagamento,
+                tipo: 'variavel'
+            });
 
-            data.gastos.push(gasto);
-            saveData();
-            renderGastos();
-            updateDashboard();
-            clearForm('gasto');
+            salvarDados();
+            atualizarListaGastos();
+            atualizarDashboard();
+            limparFormularioGasto();
         }
 
-        function addRenda() {
+        // Função para adicionar gasto fixo
+        function adicionarGastoFixo() {
+            const item = document.getElementById('gasto-fixo-item').value;
+            const valor = parseFloat(document.getElementById('gasto-fixo-valor').value);
+            const dataInicio = document.getElementById('gasto-fixo-inicio').value;
+            const dataFim = document.getElementById('gasto-fixo-fim').value;
+            const observacoes = document.getElementById('gasto-fixo-observacoes').value;
+
+            if (!item || !valor || !dataInicio || !dataFim) {
+                alert('Por favor, preencha todos os campos obrigatórios');
+                return;
+            }
+
+            gastosFix.push({
+                id: Date.now(),
+                item,
+                valor,
+                dataInicio,
+                dataFim,
+                observacoes
+            });
+
+            salvarDados();
+            atualizarListaGastosFixos();
+            atualizarListaGastos(); // Atualizar também a lista de gastos para incluir os fixos
+            atualizarDashboard();
+            limparFormularioGastoFixo();
+        }
+
+        // Função para adicionar renda
+        function adicionarRenda() {
             const mes = document.getElementById('renda-mes').value;
             const ano = document.getElementById('renda-ano').value;
             const tipo = document.getElementById('renda-tipo').value;
@@ -519,492 +542,453 @@
             const descricao = document.getElementById('renda-descricao').value;
 
             if (!mes || !ano || !tipo || !valor) {
-                alert('Por favor, preencha todos os campos obrigatórios!');
+                alert('Por favor, preencha todos os campos obrigatórios');
                 return;
             }
 
-            const renda = {
+            rendas.push({
                 id: Date.now(),
                 mes,
                 ano,
                 tipo,
                 valor,
                 descricao
-            };
+            });
 
-            data.rendas.push(renda);
-            saveData();
-            renderRendas();
-            updateDashboard();
-            clearForm('renda');
+            salvarDados();
+            atualizarListaRendas();
+            atualizarDashboard();
+            limparFormularioRenda();
         }
 
-        function addPoupanca() {
-            const data_input = document.getElementById('poupanca-data').value;
+        // Função para adicionar movimentação de poupança
+        function adicionarPoupanca() {
+            const data = document.getElementById('poupanca-data').value;
             const tipo = document.getElementById('poupanca-tipo').value;
             const valor = parseFloat(document.getElementById('poupanca-valor').value);
             const descricao = document.getElementById('poupanca-descricao').value;
 
-            if (!data_input || !tipo || !valor) {
-                alert('Por favor, preencha todos os campos obrigatórios!');
+            if (!data || !tipo || !valor) {
+                alert('Por favor, preencha todos os campos obrigatórios');
                 return;
             }
 
-            // Calculate new balance
-            const lastEntry = data.poupanca[data.poupanca.length - 1];
-            const lastBalance = lastEntry ? lastEntry.saldo : 0;
-            const newBalance = tipo === 'Depósito' ? lastBalance + valor : lastBalance - valor;
-
-            const poupanca = {
+            poupanca.push({
                 id: Date.now(),
-                data: data_input,
+                data,
                 tipo,
                 valor,
-                saldo: newBalance,
                 descricao
-            };
+            });
 
-            data.poupanca.push(poupanca);
-            saveData();
-            renderPoupanca();
-            updateDashboard();
-            clearForm('poupanca');
+            salvarDados();
+            atualizarListaPoupanca();
+            atualizarDashboard();
+            limparFormularioPoupanca();
         }
 
-        function addMeta() {
+        // Função para adicionar meta
+        function adicionarMeta() {
             const nome = document.getElementById('meta-nome').value;
             const valorAlvo = parseFloat(document.getElementById('meta-valor-alvo').value);
             const valorAtual = parseFloat(document.getElementById('meta-valor-atual').value) || 0;
             const dataLimite = document.getElementById('meta-data-limite').value;
 
             if (!nome || !valorAlvo || !dataLimite) {
-                alert('Por favor, preencha todos os campos obrigatórios!');
+                alert('Por favor, preencha todos os campos obrigatórios');
                 return;
             }
 
-            const meta = {
+            metas.push({
                 id: Date.now(),
                 nome,
                 valorAlvo,
                 valorAtual,
                 dataLimite
-            };
+            });
 
-            data.metas.push(meta);
-            saveData();
-            renderMetas();
-            updateDashboard();
-            clearForm('meta');
+            salvarDados();
+            atualizarListaMetas();
+            limparFormularioMeta();
         }
 
-        function addGastoFixo() {
-            const item = document.getElementById('gasto-fixo-item').value;
-            const valor = parseFloat(document.getElementById('gasto-fixo-valor').value);
-            const inicio = document.getElementById('gasto-fixo-inicio').value;
-            const fim = document.getElementById('gasto-fixo-fim').value;
-            const obs = document.getElementById('gasto-fixo-obs').value;
-
-            if (!item || !valor || !inicio) {
-                alert('Por favor, preencha todos os campos obrigatórios!');
-                return;
-            }
-
-            const gastoFixo = {
-                id: Date.now(),
-                item,
-                valor,
-                inicio,
-                fim,
-                obs
-            };
-
-            data.gastosFixos.push(gastoFixo);
-            saveData();
-            renderGastosFixos();
-            updateDashboard();
-            clearForm('gasto-fixo');
+        // Função para gerar gastos fixos automaticamente na lista de gastos
+        function gerarGastosFixosAutomaticos() {
+            const gastosFix = JSON.parse(localStorage.getItem('gastosFix')) || [];
+            const hoje = new Date();
+            
+            gastosFix.forEach(gastoFixo => {
+                const dataInicio = new Date(gastoFixo.dataInicio);
+                const dataFim = new Date(gastoFixo.dataFim);
+                
+                // Verificar se o gasto fixo está ativo
+                if (hoje >= dataInicio && hoje <= dataFim) {
+                    // Verificar se já existe um gasto para este mês
+                    const mesAtual = hoje.getMonth() + 1;
+                    const anoAtual = hoje.getFullYear();
+                    
+                    const jaExiste = gastos.some(gasto => {
+                        const dataGasto = new Date(gasto.data);
+                        return gasto.descricao === gastoFixo.item && 
+                               gasto.tipo === 'fixo' &&
+                               dataGasto.getMonth() + 1 === mesAtual &&
+                               dataGasto.getFullYear() === anoAtual;
+                    });
+                    
+                    if (!jaExiste) {
+                        gastos.push({
+                            id: Date.now() + Math.random(),
+                            data: obterDataAtual(),
+                            descricao: gastoFixo.item,
+                            categoria: 'Moradia',
+                            valor: gastoFixo.valor,
+                            formaPagamento: 'Automático',
+                            tipo: 'fixo'
+                        });
+                    }
+                }
+            });
+            
+            salvarDados();
         }
 
-        // Update Meta Value
-        function updateMeta(id, increment) {
-            const meta = data.metas.find(m => m.id === id);
-            if (meta) {
-                meta.valorAtual += increment;
-                if (meta.valorAtual < 0) meta.valorAtual = 0;
-                saveData();
-                renderMetas();
-                updateDashboard();
-            }
-        }
-
-        // Delete Functions
-        function deleteItem(type, id) {
-            if (confirm('Tem certeza que deseja excluir este item?')) {
-                data[type] = data[type].filter(item => item.id !== id);
-                saveData();
-                renderAllTabs();
-                updateDashboard();
-            }
-        }
-
-        // Render Functions
-        function renderGastos() {
-            const tbody = document.getElementById('gastos-list');
+        // Função para atualizar lista de gastos (incluindo fixos)
+        function atualizarListaGastos() {
+            gerarGastosFixosAutomaticos();
+            
+            const tbody = document.getElementById('gastos-lista');
             tbody.innerHTML = '';
 
-            data.gastos.forEach(gasto => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${formatDate(gasto.data)}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${gasto.descricao}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${gasto.categoria}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${formatCurrency(gasto.valor)}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${gasto.forma}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <button onclick="deleteItem('gastos', ${gasto.id})" class="text-red-600 hover:text-red-900">
+            gastos.forEach(gasto => {
+                const row = document.createElement('tr');
+                row.classList.add('border-b');
+                
+                const tipoIcon = gasto.tipo === 'fixo' ? '<i class="fas fa-home text-blue-500 mr-1"></i>' : '';
+                
+                row.innerHTML = `
+                    <td class="px-4 py-2">${new Date(gasto.data).toLocaleDateString('pt-BR')}</td>
+                    <td class="px-4 py-2">${tipoIcon}${gasto.descricao}</td>
+                    <td class="px-4 py-2">${gasto.categoria}</td>
+                    <td class="px-4 py-2">${formatarMoeda(gasto.valor)}</td>
+                    <td class="px-4 py-2">${gasto.formaPagamento}</td>
+                    <td class="px-4 py-2">
+                        <button onclick="excluirGasto(${gasto.id})" class="btn-danger px-2 py-1 rounded text-sm">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>
                 `;
-                tbody.appendChild(tr);
+                tbody.appendChild(row);
             });
         }
 
-        function renderRendas() {
-            const tbody = document.getElementById('rendas-list');
+        // Função para atualizar lista de gastos fixos
+        function atualizarListaGastosFixos() {
+            const tbody = document.getElementById('gastos-fixos-lista');
             tbody.innerHTML = '';
 
-            data.rendas.forEach(renda => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${renda.mes}/${renda.ano}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${renda.tipo}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${formatCurrency(renda.valor)}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${renda.descricao || '-'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <button onclick="deleteItem('rendas', ${renda.id})" class="text-red-600 hover:text-red-900">
+            gastosFix.forEach(gasto => {
+                const row = document.createElement('tr');
+                row.classList.add('border-b');
+                row.innerHTML = `
+                    <td class="px-4 py-2">${gasto.item}</td>
+                    <td class="px-4 py-2">${formatarMoeda(gasto.valor)}</td>
+                    <td class="px-4 py-2">${new Date(gasto.dataInicio).toLocaleDateString('pt-BR')}</td>
+                    <td class="px-4 py-2">${new Date(gasto.dataFim).toLocaleDateString('pt-BR')}</td>
+                    <td class="px-4 py-2">${gasto.observacoes || '-'}</td>
+                    <td class="px-4 py-2">
+                        <button onclick="excluirGastoFixo(${gasto.id})" class="btn-danger px-2 py-1 rounded text-sm">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>
                 `;
-                tbody.appendChild(tr);
+                tbody.appendChild(row);
             });
         }
 
-        function renderPoupanca() {
-            const tbody = document.getElementById('poupanca-list');
+        // Função para atualizar lista de rendas
+        function atualizarListaRendas() {
+            const tbody = document.getElementById('rendas-lista');
             tbody.innerHTML = '';
 
-            data.poupanca.forEach(poupanca => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${formatDate(poupanca.data)}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${poupanca.tipo}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${formatCurrency(poupanca.valor)}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${formatCurrency(poupanca.saldo)}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${poupanca.descricao || '-'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <button onclick="deleteItem('poupanca', ${poupanca.id})" class="text-red-600 hover:text-red-900">
+            rendas.forEach(renda => {
+                const row = document.createElement('tr');
+                row.classList.add('border-b');
+                row.innerHTML = `
+                    <td class="px-4 py-2">${renda.mes}/${renda.ano}</td>
+                    <td class="px-4 py-2">${renda.tipo}</td>
+                    <td class="px-4 py-2">${formatarMoeda(renda.valor)}</td>
+                    <td class="px-4 py-2">${renda.descricao || '-'}</td>
+                    <td class="px-4 py-2">
+                        <button onclick="excluirRenda(${renda.id})" class="btn-danger px-2 py-1 rounded text-sm">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>
                 `;
-                tbody.appendChild(tr);
+                tbody.appendChild(row);
             });
         }
 
-        function renderMetas() {
-            const container = document.getElementById('metas-list');
+        // Função para atualizar lista de poupança
+        function atualizarListaPoupanca() {
+            const tbody = document.getElementById('poupanca-lista');
+            tbody.innerHTML = '';
+
+            let saldoAtual = 0;
+            poupanca.forEach(mov => {
+                if (mov.tipo === 'Depósito') {
+                    saldoAtual += mov.valor;
+                } else {
+                    saldoAtual -= mov.valor;
+                }
+
+                const row = document.createElement('tr');
+                row.classList.add('border-b');
+                row.innerHTML = `
+                    <td class="px-4 py-2">${new Date(mov.data).toLocaleDateString('pt-BR')}</td>
+                    <td class="px-4 py-2">
+                        <span class="px-2 py-1 rounded text-xs ${mov.tipo === 'Depósito' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                            ${mov.tipo}
+                        </span>
+                    </td>
+                    <td class="px-4 py-2">${formatarMoeda(mov.valor)}</td>
+                    <td class="px-4 py-2">${formatarMoeda(saldoAtual)}</td>
+                    <td class="px-4 py-2">${mov.descricao || '-'}</td>
+                    <td class="px-4 py-2">
+                        <button onclick="excluirPoupanca(${mov.id})" class="btn-danger px-2 py-1 rounded text-sm">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Função para atualizar lista de metas
+        function atualizarListaMetas() {
+            const container = document.getElementById('metas-lista');
             container.innerHTML = '';
 
-            data.metas.forEach(meta => {
-                const progress = (meta.valorAtual / meta.valorAlvo) * 100;
-                const progressClass = progress >= 100 ? 'bg-green-500' : progress >= 50 ? 'bg-yellow-500' : 'bg-red-500';
-                
+            metas.forEach(meta => {
+                const progresso = (meta.valorAtual / meta.valorAlvo) * 100;
                 const div = document.createElement('div');
-                div.className = 'border rounded-lg p-4';
+                div.classList.add('bg-gray-50', 'p-4', 'rounded-lg', 'mb-4');
                 div.innerHTML = `
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="text-lg font-semibold">${meta.nome}</h4>
-                        <div class="flex space-x-2">
-                            <button onclick="updateMeta(${meta.id}, 100)" class="bg-green-500 text-white px-2 py-1 rounded text-sm">+100</button>
-                            <button onclick="updateMeta(${meta.id}, 500)" class="bg-green-600 text-white px-2 py-1 rounded text-sm">+500</button>
-                            <button onclick="updateMeta(${meta.id}, -100)" class="bg-red-500 text-white px-2 py-1 rounded text-sm">-100</button>
-                            <button onclick="deleteItem('metas', ${meta.id})" class="bg-red-600 text-white px-2 py-1 rounded text-sm">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
+                        <h4 class="font-semibold text-lg">${meta.nome}</h4>
+                        <button onclick="excluirMeta(${meta.id})" class="btn-danger px-2 py-1 rounded text-sm">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </div>
                     <div class="grid grid-cols-2 gap-4 mb-3">
                         <div>
-                            <span class="text-sm text-gray-600">Valor Alvo:</span>
-                            <span class="font-semibold">${formatCurrency(meta.valorAlvo)}</span>
+                            <p class="text-sm text-gray-600">Valor Alvo: ${formatarMoeda(meta.valorAlvo)}</p>
+                            <p class="text-sm text-gray-600">Valor Atual: ${formatarMoeda(meta.valorAtual)}</p>
                         </div>
                         <div>
-                            <span class="text-sm text-gray-600">Valor Atual:</span>
-                            <span class="font-semibold">${formatCurrency(meta.valorAtual)}</span>
-                        </div>
-                        <div>
-                            <span class="text-sm text-gray-600">Data Limite:</span>
-                            <span class="font-semibold">${formatDate(meta.dataLimite)}</span>
-                        </div>
-                        <div>
-                            <span class="text-sm text-gray-600">Progresso:</span>
-                            <span class="font-semibold">${progress.toFixed(1)}%</span>
+                            <p class="text-sm text-gray-600">Data Limite: ${new Date(meta.dataLimite).toLocaleDateString('pt-BR')}</p>
+                            <p class="text-sm text-gray-600">Progresso: ${progresso.toFixed(1)}%</p>
                         </div>
                     </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="h-2 rounded-full ${progressClass}" style="width: ${Math.min(progress, 100)}%"></div>
+                    <div class="progress-bar mb-3">
+                        <div class="progress-fill" style="width: ${Math.min(progresso, 100)}%"></div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button onclick="adicionarValorMeta(${meta.id}, 100)" class="bg-green-500 text-white px-3 py-1 rounded text-sm">
+                            +100
+                        </button>
+                        <button onclick="adicionarValorMeta(${meta.id}, 500)" class="bg-green-500 text-white px-3 py-1 rounded text-sm">
+                            +500
+                        </button>
+                        <button onclick="adicionarValorMeta(${meta.id}, 1000)" class="bg-green-500 text-white px-3 py-1 rounded text-sm">
+                            +1000
+                        </button>
+                        <button onclick="removerValorMeta(${meta.id}, 100)" class="bg-red-500 text-white px-3 py-1 rounded text-sm">
+                            -100
+                        </button>
                     </div>
                 `;
                 container.appendChild(div);
             });
         }
 
-        function renderGastosFixos() {
-            const tbody = document.getElementById('gastos-fixos-list');
-            tbody.innerHTML = '';
-
-            data.gastosFixos.forEach(gastoFixo => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${gastoFixo.item}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${formatCurrency(gastoFixo.valor)}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${formatDate(gastoFixo.inicio)}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${gastoFixo.fim ? formatDate(gastoFixo.fim) : '-'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${gastoFixo.obs || '-'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <button onclick="deleteItem('gastosFixos', ${gastoFixo.id})" class="text-red-600 hover:text-red-900">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
+        // Função para adicionar valor à meta
+        function adicionarValorMeta(metaId, valor) {
+            const meta = metas.find(m => m.id === metaId);
+            if (meta) {
+                meta.valorAtual += valor;
+                salvarDados();
+                atualizarListaMetas();
+            }
         }
 
-        function renderAllTabs() {
-            renderGastos();
-            renderRendas();
-            renderPoupanca();
-            renderMetas();
-            renderGastosFixos();
+        // Função para remover valor da meta
+        function removerValorMeta(metaId, valor) {
+            const meta = metas.find(m => m.id === metaId);
+            if (meta) {
+                meta.valorAtual = Math.max(0, meta.valorAtual - valor);
+                salvarDados();
+                atualizarListaMetas();
+            }
         }
 
-        // Dashboard Updates
-        function updateDashboard() {
-            const filters = getFilters();
-            const filteredData = applyFilters(filters);
+        // Função para calcular totais
+        function calcularTotais() {
+            // Calcular total de rendas
+            const totalRendas = rendas.reduce((total, renda) => total + renda.valor, 0);
             
-            updateSummaryCards(filteredData);
-            updateCharts(filteredData);
-        }
-
-        function getFilters() {
-            return {
-                year: document.getElementById('filter-year').value,
-                month: document.getElementById('filter-month').value,
-                category: document.getElementById('filter-category').value
-            };
-        }
-
-        function applyFilters(filters) {
-            const filtered = {
-                gastos: data.gastos.filter(item => {
-                    const itemDate = new Date(item.data);
-                    const itemYear = itemDate.getFullYear().toString();
-                    const itemMonth = (itemDate.getMonth() + 1).toString().padStart(2, '0');
-                    
-                    return (!filters.year || itemYear === filters.year) &&
-                           (!filters.month || itemMonth === filters.month) &&
-                           (!filters.category || item.categoria === filters.category);
-                }),
-                rendas: data.rendas.filter(item => {
-                    return (!filters.year || item.ano === filters.year) &&
-                           (!filters.month || item.mes === filters.month);
-                }),
-                poupanca: data.poupanca.filter(item => {
-                    const itemDate = new Date(item.data);
-                    const itemYear = itemDate.getFullYear().toString();
-                    const itemMonth = (itemDate.getMonth() + 1).toString().padStart(2, '0');
-                    
-                    return (!filters.year || itemYear === filters.year) &&
-                           (!filters.month || itemMonth === filters.month);
-                })
-            };
+            // Calcular total de gastos (incluindo fixos)
+            const totalGastos = gastos.reduce((total, gasto) => total + gasto.valor, 0);
             
-            return filtered;
-        }
-
-        function updateSummaryCards(filteredData) {
-            const totalRenda = filteredData.rendas.reduce((sum, renda) => sum + renda.valor, 0);
-            const totalGastos = filteredData.gastos.reduce((sum, gasto) => sum + gasto.valor, 0);
-            const totalPoupado = filteredData.poupanca.reduce((sum, poupanca) => {
-                return sum + (poupanca.tipo === 'Depósito' ? poupanca.valor : -poupanca.valor);
+            // Calcular total poupado (depósitos - retiradas)
+            const totalPoupado = poupanca.reduce((total, mov) => {
+                return mov.tipo === 'Depósito' ? total + mov.valor : total - mov.valor;
             }, 0);
-            const saldoAtual = totalRenda - totalGastos + totalPoupado;
-
-            document.getElementById('total-renda').textContent = formatCurrency(totalRenda);
-            document.getElementById('total-gastos').textContent = formatCurrency(totalGastos);
-            document.getElementById('total-poupado').textContent = formatCurrency(totalPoupado);
-            document.getElementById('saldo-atual').textContent = formatCurrency(saldoAtual);
-        }
-
-        // Chart Management
-        let charts = {};
-
-        function updateCharts(filteredData) {
-            updateCategoryChart(filteredData.gastos);
-            updateSavingsChart(filteredData.poupanca);
-            updateExpensesChart(filteredData);
-        }
-
-        function updateCategoryChart(gastos) {
-            const ctx = document.getElementById('category-chart').getContext('2d');
             
-            if (charts.category) {
-                charts.category.destroy();
-            }
-
-            const categories = {};
-            gastos.forEach(gasto => {
-                categories[gasto.categoria] = (categories[gasto.categoria] || 0) + gasto.valor;
-            });
-
-            charts.category = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: Object.keys(categories),
-                    datasets: [{
-                        data: Object.values(categories),
-                        backgroundColor: [
-                            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
-                            '#9966FF', '#FF9F40', '#FF6384', '#C9CBCF'
-                        ]
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom'
-                        }
-                    }
-                }
-            });
-        }
-
-        function updateSavingsChart(poupanca) {
-            const ctx = document.getElementById('savings-chart').getContext('2d');
+            // Calcular saldo atual (rendas - gastos - poupança)
+            const saldoAtual = totalRendas - totalGastos - totalPoupado;
             
-            if (charts.savings) {
-                charts.savings.destroy();
-            }
-
-            const labels = poupanca.map(p => formatDate(p.data));
-            const data = poupanca.map(p => p.saldo);
-
-            charts.savings = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Saldo da Poupança',
-                        data: data,
-                        borderColor: '#36A2EB',
-                        backgroundColor: 'rgba(54, 162, 235, 0.1)',
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        }
-
-        function updateExpensesChart(filteredData) {
-            const ctx = document.getElementById('expenses-chart').getContext('2d');
-            
-            if (charts.expenses) {
-                charts.expenses.destroy();
-            }
-
-            const gastosVariaveis = filteredData.gastos.reduce((sum, gasto) => sum + gasto.valor, 0);
-            const gastosFixos = data.gastosFixos.reduce((sum, gasto) => sum + gasto.valor, 0);
-
-            charts.expenses = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Gastos Variáveis', 'Gastos Fixos'],
-                    datasets: [{
-                        label: 'Valor',
-                        data: [gastosVariaveis, gastosFixos],
-                        backgroundColor: ['#FF6384', '#36A2EB']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        }
-
-        // Utility Functions
-        function formatCurrency(value) {
-            return new Intl.NumberFormat('pt-BR', {
-                style: 'currency',
-                currency: 'BRL'
-            }).format(value);
-        }
-
-        function formatDate(dateString) {
-            return new Date(dateString).toLocaleDateString('pt-BR');
-        }
-
-        function clearForm(type) {
-            const forms = {
-                'gasto': ['gasto-data', 'gasto-descricao', 'gasto-categoria', 'gasto-valor', 'gasto-forma'],
-                'renda': ['renda-mes', 'renda-ano', 'renda-tipo', 'renda-valor', 'renda-descricao'],
-                'poupanca': ['poupanca-data', 'poupanca-tipo', 'poupanca-valor', 'poupanca-descricao'],
-                'meta': ['meta-nome', 'meta-valor-alvo', 'meta-valor-atual', 'meta-data-limite'],
-                'gasto-fixo': ['gasto-fixo-item', 'gasto-fixo-valor', 'gasto-fixo-inicio', 'gasto-fixo-fim', 'gasto-fixo-obs']
+            return {
+                totalRendas,
+                totalGastos,
+                totalPoupado,
+                saldoAtual
             };
-
-            forms[type].forEach(id => {
-                const element = document.getElementById(id);
-                if (element.type === 'date' && id.includes('data')) {
-                    element.valueAsDate = new Date();
-                } else {
-                    element.value = '';
-                }
-            });
         }
 
-        function saveData() {
-            Object.keys(data).forEach(key => {
-                localStorage.setItem(key, JSON.stringify(data[key]));
-            });
+        // Função para atualizar dashboard
+        function atualizarDashboard() {
+            const totais = calcularTotais();
+            
+            document.getElementById('total-renda').textContent = formatarMoeda(totais.totalRendas);
+            document.getElementById('total-gastos').textContent = formatarMoeda(totais.totalGastos);
+            document.getElementById('total-poupado').textContent = formatarMoeda(totais.totalPoupado);
+            document.getElementById('saldo-atual').textContent = formatarMoeda(totais.saldoAtual);
         }
+
+        // Funções para excluir itens
+        function excluirGasto(id) {
+            if (confirm('Deseja realmente excluir este gasto?')) {
+                gastos = gastos.filter(gasto => gasto.id !== id);
+                salvarDados();
+                atualizarListaGastos();
+                atualizarDashboard();
+            }
+        }
+
+        function excluirGastoFixo(id) {
+            if (confirm('Deseja realmente excluir este gasto fixo?')) {
+                gastosFix = gastosFix.filter(gasto => gasto.id !== id);
+                salvarDados();
+                atualizarListaGastosFixos();
+                atualizarListaGastos();
+                atualizarDashboard();
+            }
+        }
+
+        function excluirRenda(id) {
+            if (confirm('Deseja realmente excluir esta renda?')) {
+                rendas = rendas.filter(renda => renda.id !== id);
+                salvarDados();
+                atualizarListaRendas();
+                atualizarDashboard();
+            }
+        }
+
+        function excluirPoupanca(id) {
+            if (confirm('Deseja realmente excluir esta movimentação?')) {
+                poupanca = poupanca.filter(mov => mov.id !== id);
+                salvarDados();
+                atualizarListaPoupanca();
+                atualizarDashboard();
+            }
+        }
+
+        function excluirMeta(id) {
+            if (confirm('Deseja realmente excluir esta meta?')) {
+                metas = metas.filter(meta => meta.id !== id);
+                salvarDados();
+                atualizarListaMetas();
+            }
+        }
+
+        // Funções para limpar formulários
+        function limparFormularioGasto() {
+            document.getElementById('gasto-data').value = '';
+            document.getElementById('gasto-descricao').value = '';
+            document.getElementById('gasto-categoria').value = '';
+            document.getElementById('gasto-valor').value = '';
+            document.getElementById('gasto-forma-pagamento').value = '';
+        }
+
+        function limparFormularioGastoFixo() {
+            document.getElementById('gasto-fixo-item').value = '';
+            document.getElementById('gasto-fixo-valor').value = '';
+            document.getElementById('gasto-fixo-inicio').value = '';
+            document.getElementById('gasto-fixo-fim').value = '';
+            document.getElementById('gasto-fixo-observacoes').value = '';
+        }
+
+        function limparFormularioRenda() {
+            document.getElementById('renda-mes').value = '';
+            document.getElementById('renda-ano').value = '';
+            document.getElementById('renda-tipo').value = '';
+            document.getElementById('renda-valor').value = '';
+            document.getElementById('renda-descricao').value = '';
+        }
+
+        function limparFormularioPoupanca() {
+            document.getElementById('poupanca-data').value = '';
+            document.getElementById('poupanca-tipo').value = '';
+            document.getElementById('poupanca-valor').value = '';
+            document.getElementById('poupanca-descricao').value = '';
+        }
+
+        function limparFormularioMeta() {
+            document.getElementById('meta-nome').value = '';
+            document.getElementById('meta-valor-alvo').value = '';
+            document.getElementById('meta-valor-atual').value = '';
+            document.getElementById('meta-data-limite').value = '';
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Gerar anos automaticamente
+            gerarAnos();
+            
+            // Configurar data atual nos campos de data
+            document.getElementById('gasto-data').value = obterDataAtual();
+            document.getElementById('poupanca-data').value = obterDataAtual();
+            
+            // Event listeners para abas
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    alternarAba(this.dataset.tab);
+                });
+            });
+
+            // Event listeners para formulários
+            document.getElementById('adicionar-gasto').addEventListener('click', adicionarGasto);
+            document.getElementById('adicionar-gasto-fixo').addEventListener('click', adicionarGastoFixo);
+            document.getElementById('adicionar-renda').addEventListener('click', adicionarRenda);
+            document.getElementById('adicionar-poupanca').addEventListener('click', adicionarPoupanca);
+            document.getElementById('adicionar-meta').addEventListener('click', adicionarMeta);
+
+            // Carregar dados
+            atualizarListaGastos();
+            atualizarListaGastosFixos();
+            atualizarListaRendas();
+            atualizarListaPoupanca();
+            atualizarListaMetas();
+            atualizarDashboard();
+        });
     </script>
 </body>
 </html>
     <script id="html_badge_script1">
         window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
-            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDnMl%2BYsQki3SI%2FuaUtaG7QIPyhSIRO3RBE8KntcGPCJVYqQWOWQt73o1gJmfMNC7%2FbjYLsTnhnLXOQv1XRgbvBNM5hnqhHldR8CjNzLXH1DbGpgl0OUy8yGDYqIm0vpfoDRaPZ3bDGj6Hu2%2B6VpVk3iNtRHn2SuEFdWBcXV0mInd0AtG7sOiJGw4zdpc0WA9i2tDs3ap%2F8gKIQLa871Z4jLUqynuvg7iWE%2BZLwQn9QymE30HEMAfZxq9N911xOeCG6ict1aSjGIlLMrDQj3V7hmLeebn98Atkq7j7WgLGzXtUvU8Dtc94rh0bjA6aBrCWp%2BkQ%2FF%2FTr3bxzPb183z1OathqGFNTX8Th215YyXXrLo3ibSdvGLlH7DTBSvzBNngjT0noFvdT0iZdQdk9FRU7eNS%2BWew2qnvLZqlP2mVtowqHyNcvkR2%2Fm%2FBpIqJvPtHMNgJhNvoDr4hV5wBz%2FqpXD5uEKZSt6ArQvlVW%2FJhZ9mjkaBbHUTFBZyNHMOWZaJmARdgDE8v0CvQBTJXF357YE%3D";
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDgkA6T2myZ2iIi4Wyp9D6tJj8AnZZbZCbF%2BT4QAZHXGNBiirGAwYB08y%2BCYCDspUPjvn5ihq%2BZ9MBfI6bnz3ZXM94He32P3qVUSXgZwuEY0IVOXqc%2FMAyQPZNhvlw2Z4pLlsrQursGXDoQWxa6dE71%2FkAekZRpcWFmlvU3fDhRJnAVLJa9L842cEzHZ25iiMuwhKqLyaCB7AiY%2F%2BMoxSlMe2csdOcPemE8DZmaNCc56XUaoVQLjUoEQU5TDt7NjD75YHmdnhvqnm4vfjFtKW9WuJSeeD8QAG0V9opQtdDgzHAJJO4zbIQe6seT3VxPSf8p9rgtxAe%2BUlZP2u0Gp%2Fy5You5NtTP3qlB6eOKApfQZWMxlYvXHNm23fvJpzxrdSeVvCmSMg3EiVtVIpDfCpZRbvJFinE2DTagY3ahYvq5mBaHb5OwnaAGIXFB418zVnhUdkZXdxXftMWJlIDCRvdJRNax4%2F1aSFg%2FpmVGxb1dfHflOXMfyiMq9AUwSaYUEAm5neRyd2BO8hJfjmmWP4ByY%3D";
         window.__genspark_locale = "pt-BR";
-        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDnMl+YsQki3SI/uaUtaG7QIPyhSIRO3RBE8KntcGPCJVYqQWOWQt73o1gJmfMNC7/bjYLsTnhnLXOQv1XRgbvBNM5hnqhHldR8CjNzLXH1DbGpgl0OUy8yGDYqIm0vpfoDRaPZ3bDGj6Hu2+6VpVk3iNtRHn2SuEFdWBcXV0mInd0AtG7sOiJGw4zdpc0WA9i2tDs3ap/8gKIQLa871Z4jLUqynuvg7iWE+ZLwQn9QymE30HEMAfZxq9N911xOeCG6ict1aSjGIlLMrDQj3V7hmLeebn98Atkq7j7WgLGzXtUvU8Dtc94rh0bjA6aBrCWp+kQ/F/Tr3bxzPb183z1OathqGFNTX8Th215YyXXrLo3ibSdvGLlH7DTBSvzBNngjT0noFvdT0iZdQdk9FRU7eNS+Wew2qnvLZqlP2mVtowqHyNcvkR2/m/BpIqJvPtHMNgJhNvoDr4hV5wBz/qpXD5uEKZSt6ArQvlVW/JhZ9mjkaBbHUTFBZyNHMOWZaJmARdgDE8v0CvQBTJXF357YE=";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDgkA6T2myZ2iIi4Wyp9D6tJj8AnZZbZCbF+T4QAZHXGNBiirGAwYB08y+CYCDspUPjvn5ihq+Z9MBfI6bnz3ZXM94He32P3qVUSXgZwuEY0IVOXqc/MAyQPZNhvlw2Z4pLlsrQursGXDoQWxa6dE71/kAekZRpcWFmlvU3fDhRJnAVLJa9L842cEzHZ25iiMuwhKqLyaCB7AiY/+MoxSlMe2csdOcPemE8DZmaNCc56XUaoVQLjUoEQU5TDt7NjD75YHmdnhvqnm4vfjFtKW9WuJSeeD8QAG0V9opQtdDgzHAJJO4zbIQe6seT3VxPSf8p9rgtxAe+UlZP2u0Gp/y5You5NtTP3qlB6eOKApfQZWMxlYvXHNm23fvJpzxrdSeVvCmSMg3EiVtVIpDfCpZRbvJFinE2DTagY3ahYvq5mBaHb5OwnaAGIXFB418zVnhUdkZXdxXftMWJlIDCRvdJRNax4/1aSFg/pmVGxb1dfHflOXMfyiMq9AUwSaYUEAm5neRyd2BO8hJfjmmWP4ByY=";
     </script>
     
     <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
