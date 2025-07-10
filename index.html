@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Controle Financeiro Familiar</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=2lXVOHJ5uOtjVSq5i4Gzszrk56rzAXRaMqh9YHpRY0NVlNdwHuY1Ui4F-YDtUQyRK8rhWRBkW0lD-dKNbcC4UeSgTZqhYsu0SnyYV7oEjPlG5FbyGmihamzbuTWMoNG8_FrFGr4BPwe6qsqSW1oZQ-x1IAJ3RBoXnBpaOjobz-o8neGW1RpIEFo0XcB_KX9ERknXl4YSiT8TT4tEDJteN7NQa8AsD7IywTgUzeCRC0QD2cOV9-fa6o0Q9wE_IN3uKiyY-zUr-9R3ERdMfk2anbSQuLjJOFkcr0_kRrfi5xVPvJIhdkSMOJS0_5JBxeizJxCIxsJInfNVhCXXgibSVPZPUXcnnvjjcBs5aCDmdjykAf0GCyxnOHIYOLIKX-W1tifjcGAh0Yz-ypznB1IkmT0DMh8sjwNB24QOGsBosI10oF1U9RIo5XCvYh_4wplu" charset="UTF-8"></script><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-renda {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-poupanca {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        .card-gastos {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+        .card-saldo {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+        .progress-bar {
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+        }
+        .btn-add {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .btn-add:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="gradient-bg text-white p-6 shadow-lg">
+        <div class="container mx-auto">
+            <h1 class="text-3xl font-bold flex items-center">
+                <i class="fas fa-chart-line mr-3"></i>
+                Sistema de Controle Financeiro Familiar
+            </h1>
+            <p class="text-blue-100 mt-2">Gerencie suas finanças de forma inteligente e visual</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="container mx-auto px-6">
+            <div class="flex space-x-1">
+                <button class="nav-btn active px-4 py-3 border-b-2 border-blue-500 text-blue-600 font-medium" data-tab="dashboard">
+                    <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
+                </button>
+                <button class="nav-btn px-4 py-3 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium" data-tab="gastos">
+                    <i class="fas fa-shopping-cart mr-2"></i>Gastos
+                </button>
+                <button class="nav-btn px-4 py-3 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium" data-tab="gastos-fixos">
+                    <i class="fas fa-home mr-2"></i>Gastos Fixos
+                </button>
+                <button class="nav-btn px-4 py-3 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium" data-tab="rendas">
+                    <i class="fas fa-dollar-sign mr-2"></i>Rendas
+                </button>
+                <button class="nav-btn px-4 py-3 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium" data-tab="poupanca">
+                    <i class="fas fa-piggy-bank mr-2"></i>Poupança
+                </button>
+                <button class="nav-btn px-4 py-3 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium" data-tab="metas">
+                    <i class="fas fa-target mr-2"></i>Metas
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <main class="container mx-auto px-6 py-8">
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content">
+            <!-- Filtros -->
+            <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
+                <h2 class="text-xl font-semibold mb-4">Filtros</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Ano</label>
+                        <select id="filtro-ano" class="w-full p-2 border rounded-md">
+                            <option value="">Todos</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Mês</label>
+                        <select id="filtro-mes" class="w-full p-2 border rounded-md">
+                            <option value="">Todos</option>
+                            <option value="1">Janeiro</option>
+                            <option value="2">Fevereiro</option>
+                            <option value="3">Março</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Maio</option>
+                            <option value="6">Junho</option>
+                            <option value="7">Julho</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Setembro</option>
+                            <option value="10">Outubro</option>
+                            <option value="11">Novembro</option>
+                            <option value="12">Dezembro</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Categoria</label>
+                        <select id="filtro-categoria" class="w-full p-2 border rounded-md">
+                            <option value="">Todas</option>
+                            <option value="Alimentação">Alimentação</option>
+                            <option value="Transporte">Transporte</option>
+                            <option value="Moradia">Moradia</option>
+                            <option value="Lazer">Lazer</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Educação">Educação</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end">
+                        <button id="aplicar-filtros" class="w-full bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-800">
+                            <i class="fas fa-filter mr-2"></i>Aplicar Filtros
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cards de Resumo -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="card-renda text-white p-6 rounded-lg shadow-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-lg font-semibold">Renda Total</h3>
+                            <p class="text-2xl font-bold" id="renda-total">R$ 0,00</p>
+                        </div>
+                        <i class="fas fa-arrow-up text-3xl opacity-80"></i>
+                    </div>
+                </div>
+                <div class="card-poupanca text-white p-6 rounded-lg shadow-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-lg font-semibold">Total Poupado</h3>
+                            <p class="text-2xl font-bold" id="total-poupado">R$ 0,00</p>
+                        </div>
+                        <i class="fas fa-piggy-bank text-3xl opacity-80"></i>
+                    </div>
+                </div>
+                <div class="card-gastos text-white p-6 rounded-lg shadow-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-lg font-semibold">Total Gastos</h3>
+                            <p class="text-2xl font-bold" id="total-gastos">R$ 0,00</p>
+                        </div>
+                        <i class="fas fa-shopping-cart text-3xl opacity-80"></i>
+                    </div>
+                </div>
+                <div class="card-saldo text-white p-6 rounded-lg shadow-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-lg font-semibold">Saldo Atual</h3>
+                            <p class="text-2xl font-bold" id="saldo-atual">R$ 0,00</p>
+                        </div>
+                        <i class="fas fa-wallet text-3xl opacity-80"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráficos -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="text-lg font-semibold mb-4">Gastos por Categoria</h3>
+                    <canvas id="gastosCategoriaChart" style="height: 300px;"></canvas>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="text-lg font-semibold mb-4">Evolução da Poupança</h3>
+                    <canvas id="evolucaoPoupancaChart" style="height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gastos Tab -->
+        <div id="gastos" class="tab-content hidden">
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                <h2 class="text-xl font-semibold mb-6">Controle de Gastos</h2>
+                
+                <!-- Adicionar Gasto -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium mb-4">Adicionar Gasto</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                        <input type="date" id="gasto-data" class="p-2 border rounded-md">
+                        <input type="text" id="gasto-descricao" placeholder="Descrição" class="p-2 border rounded-md">
+                        <select id="gasto-categoria" class="p-2 border rounded-md">
+                            <option value="">Selecione</option>
+                            <option value="Alimentação">Alimentação</option>
+                            <option value="Transporte">Transporte</option>
+                            <option value="Moradia">Moradia</option>
+                            <option value="Lazer">Lazer</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Educação">Educação</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                        <input type="number" id="gasto-valor" placeholder="Valor" class="p-2 border rounded-md" step="0.01">
+                        <select id="gasto-forma-pagamento" class="p-2 border rounded-md">
+                            <option value="">Forma de Pagamento</option>
+                            <option value="Dinheiro">Dinheiro</option>
+                            <option value="Cartão de Crédito">Cartão de Crédito</option>
+                            <option value="Cartão de Débito">Cartão de Débito</option>
+                            <option value="Transferência">Transferência</option>
+                            <option value="Boleto">Boleto</option>
+                        </select>
+                    </div>
+                    <button id="adicionar-gasto" class="btn-add text-white px-6 py-2 rounded-md hover:bg-blue-700 mt-4">
+                        <i class="fas fa-plus mr-2"></i>Adicionar Gasto
+                    </button>
+                </div>
+
+                <!-- Lista de Gastos -->
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Lista de Gastos</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse border border-gray-300">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="border border-gray-300 p-2 text-left">Data</th>
+                                    <th class="border border-gray-300 p-2 text-left">Descrição</th>
+                                    <th class="border border-gray-300 p-2 text-left">Categoria</th>
+                                    <th class="border border-gray-300 p-2 text-left">Valor</th>
+                                    <th class="border border-gray-300 p-2 text-left">Forma de Pagamento</th>
+                                    <th class="border border-gray-300 p-2 text-left">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="gastos-lista">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gastos Fixos Tab -->
+        <div id="gastos-fixos" class="tab-content hidden">
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                <h2 class="text-xl font-semibold mb-6">Controle de Gastos Fixos</h2>
+                
+                <!-- Adicionar Gasto Fixo -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium mb-4">Adicionar Gasto Fixo</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                        <input type="text" id="gasto-fixo-item" placeholder="Item" class="p-2 border rounded-md">
+                        <input type="number" id="gasto-fixo-valor" placeholder="Valor Mensal" class="p-2 border rounded-md" step="0.01">
+                        <input type="date" id="gasto-fixo-inicio" class="p-2 border rounded-md">
+                        <input type="date" id="gasto-fixo-fim" class="p-2 border rounded-md">
+                        <input type="text" id="gasto-fixo-obs" placeholder="Observações" class="p-2 border rounded-md">
+                    </div>
+                    <button id="adicionar-gasto-fixo" class="btn-add text-white px-6 py-2 rounded-md hover:bg-blue-700 mt-4">
+                        <i class="fas fa-plus mr-2"></i>Adicionar Gasto Fixo
+                    </button>
+                </div>
+
+                <!-- Lista de Gastos Fixos -->
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Lista de Gastos Fixos</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse border border-gray-300">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="border border-gray-300 p-2 text-left">Item</th>
+                                    <th class="border border-gray-300 p-2 text-left">Valor Mensal</th>
+                                    <th class="border border-gray-300 p-2 text-left">Data de Início</th>
+                                    <th class="border border-gray-300 p-2 text-left">Data de Fim</th>
+                                    <th class="border border-gray-300 p-2 text-left">Observações</th>
+                                    <th class="border border-gray-300 p-2 text-left">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="gastos-fixos-lista">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rendas Tab -->
+        <div id="rendas" class="tab-content hidden">
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                <h2 class="text-xl font-semibold mb-6">Controle de Rendas</h2>
+                
+                <!-- Adicionar Renda -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium mb-4">Adicionar Renda</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                        <select id="renda-mes" class="p-2 border rounded-md">
+                            <option value="">Mês</option>
+                            <option value="1">Janeiro</option>
+                            <option value="2">Fevereiro</option>
+                            <option value="3">Março</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Maio</option>
+                            <option value="6">Junho</option>
+                            <option value="7">Julho</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Setembro</option>
+                            <option value="10">Outubro</option>
+                            <option value="11">Novembro</option>
+                            <option value="12">Dezembro</option>
+                        </select>
+                        <select id="renda-ano" class="p-2 border rounded-md">
+                            <option value="">Ano</option>
+                        </select>
+                        <select id="renda-tipo" class="p-2 border rounded-md">
+                            <option value="">Tipo de Renda</option>
+                            <option value="Salário Titular">Salário Titular</option>
+                            <option value="Salário Cônjuge">Salário Cônjuge</option>
+                            <option value="Freelance">Freelance</option>
+                            <option value="Investimentos">Investimentos</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                        <input type="number" id="renda-valor" placeholder="Valor" class="p-2 border rounded-md" step="0.01">
+                        <input type="text" id="renda-descricao" placeholder="Descrição" class="p-2 border rounded-md">
+                    </div>
+                    <button id="adicionar-renda" class="btn-add text-white px-6 py-2 rounded-md hover:bg-blue-700 mt-4">
+                        <i class="fas fa-plus mr-2"></i>Adicionar Renda
+                    </button>
+                </div>
+
+                <!-- Lista de Rendas -->
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Lista de Rendas</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse border border-gray-300">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="border border-gray-300 p-2 text-left">Mês/Ano</th>
+                                    <th class="border border-gray-300 p-2 text-left">Tipo</th>
+                                    <th class="border border-gray-300 p-2 text-left">Valor</th>
+                                    <th class="border border-gray-300 p-2 text-left">Descrição</th>
+                                    <th class="border border-gray-300 p-2 text-left">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rendas-lista">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Poupança Tab -->
+        <div id="poupanca" class="tab-content hidden">
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                <h2 class="text-xl font-semibold mb-6">Controle de Poupança</h2>
+                
+                <!-- Adicionar Movimentação -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium mb-4">Adicionar Movimentação</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <input type="date" id="poupanca-data" class="p-2 border rounded-md">
+                        <select id="poupanca-tipo" class="p-2 border rounded-md">
+                            <option value="">Tipo</option>
+                            <option value="Depósito">Depósito</option>
+                            <option value="Retirada">Retirada</option>
+                        </select>
+                        <input type="number" id="poupanca-valor" placeholder="Valor" class="p-2 border rounded-md" step="0.01">
+                        <input type="text" id="poupanca-descricao" placeholder="Descrição" class="p-2 border rounded-md">
+                    </div>
+                    <button id="adicionar-poupanca" class="btn-add text-white px-6 py-2 rounded-md hover:bg-blue-700 mt-4">
+                        <i class="fas fa-plus mr-2"></i>Adicionar Movimentação
+                    </button>
+                </div>
+
+                <!-- Lista de Movimentações -->
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Lista de Movimentações</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse border border-gray-300">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="border border-gray-300 p-2 text-left">Data</th>
+                                    <th class="border border-gray-300 p-2 text-left">Tipo</th>
+                                    <th class="border border-gray-300 p-2 text-left">Valor</th>
+                                    <th class="border border-gray-300 p-2 text-left">Saldo</th>
+                                    <th class="border border-gray-300 p-2 text-left">Descrição</th>
+                                    <th class="border border-gray-300 p-2 text-left">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="poupanca-lista">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metas Tab -->
+        <div id="metas" class="tab-content hidden">
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                <h2 class="text-xl font-semibold mb-6">Controle de Metas</h2>
+                
+                <!-- Adicionar Meta -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium mb-4">Adicionar Meta</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <input type="text" id="meta-nome" placeholder="Nome da Meta" class="p-2 border rounded-md">
+                        <input type="number" id="meta-valor-alvo" placeholder="Valor Alvo" class="p-2 border rounded-md" step="0.01">
+                        <input type="number" id="meta-valor-atual" placeholder="Valor Atual" class="p-2 border rounded-md" step="0.01">
+                        <input type="date" id="meta-data-limite" class="p-2 border rounded-md">
+                    </div>
+                    <button id="adicionar-meta" class="btn-add text-white px-6 py-2 rounded-md hover:bg-blue-700 mt-4">
+                        <i class="fas fa-plus mr-2"></i>Adicionar Meta
+                    </button>
+                </div>
+
+                <!-- Lista de Metas -->
+                <div id="metas-lista">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Dados armazenados localmente
+        let dados = {
+            gastos: JSON.parse(localStorage.getItem('gastos')) || [],
+            gastosFixos: JSON.parse(localStorage.getItem('gastosFixos')) || [],
+            rendas: JSON.parse(localStorage.getItem('rendas')) || [],
+            poupanca: JSON.parse(localStorage.getItem('poupanca')) || [],
+            metas: JSON.parse(localStorage.getItem('metas')) || []
+        };
+
+        // Funções de utilidade
+        function formatarData(data) {
+            const d = new Date(data);
+            return d.toLocaleDateString('pt-BR');
+        }
+
+        function formatarMoeda(valor) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(valor);
+        }
+
+        function obterDataHoje() {
+            return new Date().toISOString().split('T')[0];
+        }
+
+        function gerarAnos() {
+            const anoAtual = new Date().getFullYear();
+            const selectAno = document.getElementById('filtro-ano');
+            const rendaAno = document.getElementById('renda-ano');
+            
+            selectAno.innerHTML = '<option value="">Todos</option>';
+            rendaAno.innerHTML = '<option value="">Ano</option>';
+            
+            for (let ano = anoAtual; ano <= anoAtual + 10; ano++) {
+                selectAno.innerHTML += `<option value="${ano}">${ano}</option>`;
+                rendaAno.innerHTML += `<option value="${ano}">${ano}</option>`;
+            }
+        }
+
+        function salvarDados() {
+            Object.keys(dados).forEach(key => {
+                localStorage.setItem(key, JSON.stringify(dados[key]));
+            });
+        }
+
+        // Navegação entre abas
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tab = btn.dataset.tab;
+                
+                // Atualizar navegação
+                document.querySelectorAll('.nav-btn').forEach(b => {
+                    b.classList.remove('active', 'border-blue-500', 'text-blue-600');
+                    b.classList.add('border-transparent', 'text-gray-500');
+                });
+                btn.classList.add('active', 'border-blue-500', 'text-blue-600');
+                btn.classList.remove('border-transparent', 'text-gray-500');
+                
+                // Mostrar conteúdo
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.add('hidden');
+                });
+                document.getElementById(tab).classList.remove('hidden');
+                
+                // Atualizar dados se necessário
+                if (tab === 'dashboard') {
+                    atualizarDashboard();
+                } else if (tab === 'gastos') {
+                    atualizarListaGastos();
+                } else if (tab === 'gastos-fixos') {
+                    atualizarListaGastosFixos();
+                } else if (tab === 'rendas') {
+                    atualizarListaRendas();
+                } else if (tab === 'poupanca') {
+                    atualizarListaPoupanca();
+                } else if (tab === 'metas') {
+                    atualizarListaMetas();
+                }
+            });
+        });
+
+        // Gastos
+        document.getElementById('adicionar-gasto').addEventListener('click', () => {
+            const data = document.getElementById('gasto-data').value;
+            const descricao = document.getElementById('gasto-descricao').value;
+            const categoria = document.getElementById('gasto-categoria').value;
+            const valor = parseFloat(document.getElementById('gasto-valor').value);
+            const formaPagamento = document.getElementById('gasto-forma-pagamento').value;
+            
+            if (data && descricao && categoria && valor && formaPagamento) {
+                dados.gastos.push({
+                    id: Date.now(),
+                    data,
+                    descricao,
+                    categoria,
+                    valor,
+                    formaPagamento,
+                    tipo: 'variavel'
+                });
+                
+                // Limpar campos
+                document.getElementById('gasto-data').value = '';
+                document.getElementById('gasto-descricao').value = '';
+                document.getElementById('gasto-categoria').value = '';
+                document.getElementById('gasto-valor').value = '';
+                document.getElementById('gasto-forma-pagamento').value = '';
+                
+                salvarDados();
+                atualizarListaGastos();
+                atualizarDashboard();
+            }
+        });
+
+        function atualizarListaGastos() {
+            const tbody = document.getElementById('gastos-lista');
+            tbody.innerHTML = '';
+            
+            // Adicionar gastos fixos automaticamente
+            const gastosComFixos = [...dados.gastos];
+            
+            // Adicionar gastos fixos para cada mês
+            dados.gastosFixos.forEach(fixo => {
+                const inicio = new Date(fixo.dataInicio);
+                const fim = new Date(fixo.dataFim);
+                const hoje = new Date();
+                
+                // Para cada mês entre início e fim
+                for (let d = new Date(inicio); d <= fim && d <= hoje; d.setMonth(d.getMonth() + 1)) {
+                    const primeiroDia = new Date(d.getFullYear(), d.getMonth(), 1);
+                    gastosComFixos.push({
+                        id: `fixo-${fixo.id}-${d.getFullYear()}-${d.getMonth()}`,
+                        data: primeiroDia.toISOString().split('T')[0],
+                        descricao: fixo.item,
+                        categoria: 'Moradia',
+                        valor: fixo.valor,
+                        formaPagamento: 'Automático',
+                        tipo: 'fixo'
+                    });
+                }
+            });
+            
+            gastosComFixos.sort((a, b) => new Date(b.data) - new Date(a.data));
+            
+            gastosComFixos.forEach(gasto => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="border border-gray-300 p-2">${formatarData(gasto.data)}</td>
+                    <td class="border border-gray-300 p-2">${gasto.descricao}</td>
+                    <td class="border border-gray-300 p-2">${gasto.categoria}</td>
+                    <td class="border border-gray-300 p-2">${formatarMoeda(gasto.valor)}</td>
+                    <td class="border border-gray-300 p-2">${gasto.formaPagamento}</td>
+                    <td class="border border-gray-300 p-2">
+                        ${gasto.tipo === 'variavel' ? `<button class="text-red-600 hover:text-red-800" onclick="removerGasto(${gasto.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>` : '<span class="text-gray-500">Fixo</span>'}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function removerGasto(id) {
+            if (confirm('Deseja realmente excluir este gasto?')) {
+                dados.gastos = dados.gastos.filter(gasto => gasto.id !== id);
+                salvarDados();
+                atualizarListaGastos();
+                atualizarDashboard();
+            }
+        }
+
+        // Gastos Fixos
+        document.getElementById('adicionar-gasto-fixo').addEventListener('click', () => {
+            const item = document.getElementById('gasto-fixo-item').value;
+            const valor = parseFloat(document.getElementById('gasto-fixo-valor').value);
+            const dataInicio = document.getElementById('gasto-fixo-inicio').value;
+            const dataFim = document.getElementById('gasto-fixo-fim').value;
+            const observacoes = document.getElementById('gasto-fixo-obs').value;
+            
+            if (item && valor && dataInicio && dataFim) {
+                dados.gastosFixos.push({
+                    id: Date.now(),
+                    item,
+                    valor,
+                    dataInicio,
+                    dataFim,
+                    observacoes
+                });
+                
+                // Limpar campos
+                document.getElementById('gasto-fixo-item').value = '';
+                document.getElementById('gasto-fixo-valor').value = '';
+                document.getElementById('gasto-fixo-inicio').value = '';
+                document.getElementById('gasto-fixo-fim').value = '';
+                document.getElementById('gasto-fixo-obs').value = '';
+                
+                salvarDados();
+                atualizarListaGastosFixos();
+                atualizarListaGastos();
+                atualizarDashboard();
+            }
+        });
+
+        function atualizarListaGastosFixos() {
+            const tbody = document.getElementById('gastos-fixos-lista');
+            tbody.innerHTML = '';
+            
+            dados.gastosFixos.forEach(fixo => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="border border-gray-300 p-2">${fixo.item}</td>
+                    <td class="border border-gray-300 p-2">${formatarMoeda(fixo.valor)}</td>
+                    <td class="border border-gray-300 p-2">${formatarData(fixo.dataInicio)}</td>
+                    <td class="border border-gray-300 p-2">${formatarData(fixo.dataFim)}</td>
+                    <td class="border border-gray-300 p-2">${fixo.observacoes}</td>
+                    <td class="border border-gray-300 p-2">
+                        <button class="text-red-600 hover:text-red-800" onclick="removerGastoFixo(${fixo.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function removerGastoFixo(id) {
+            if (confirm('Deseja realmente excluir este gasto fixo?')) {
+                dados.gastosFixos = dados.gastosFixos.filter(fixo => fixo.id !== id);
+                salvarDados();
+                atualizarListaGastosFixos();
+                atualizarListaGastos();
+                atualizarDashboard();
+            }
+        }
+
+        // Rendas
+        document.getElementById('adicionar-renda').addEventListener('click', () => {
+            const mes = document.getElementById('renda-mes').value;
+            const ano = document.getElementById('renda-ano').value;
+            const tipo = document.getElementById('renda-tipo').value;
+            const valor = parseFloat(document.getElementById('renda-valor').value);
+            const descricao = document.getElementById('renda-descricao').value;
+            
+            if (mes && ano && tipo && valor) {
+                dados.rendas.push({
+                    id: Date.now(),
+                    mes,
+                    ano,
+                    tipo,
+                    valor,
+                    descricao
+                });
+                
+                // Limpar campos
+                document.getElementById('renda-mes').value = '';
+                document.getElementById('renda-ano').value = '';
+                document.getElementById('renda-tipo').value = '';
+                document.getElementById('renda-valor').value = '';
+                document.getElementById('renda-descricao').value = '';
+                
+                salvarDados();
+                atualizarListaRendas();
+                atualizarDashboard();
+            }
+        });
+
+        function atualizarListaRendas() {
+            const tbody = document.getElementById('rendas-lista');
+            tbody.innerHTML = '';
+            
+            dados.rendas.forEach(renda => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="border border-gray-300 p-2">${renda.mes.padStart(2, '0')}/${renda.ano}</td>
+                    <td class="border border-gray-300 p-2">${renda.tipo}</td>
+                    <td class="border border-gray-300 p-2">${formatarMoeda(renda.valor)}</td>
+                    <td class="border border-gray-300 p-2">${renda.descricao}</td>
+                    <td class="border border-gray-300 p-2">
+                        <button class="text-red-600 hover:text-red-800" onclick="removerRenda(${renda.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function removerRenda(id) {
+            if (confirm('Deseja realmente excluir esta renda?')) {
+                dados.rendas = dados.rendas.filter(renda => renda.id !== id);
+                salvarDados();
+                atualizarListaRendas();
+                atualizarDashboard();
+            }
+        }
+
+        // Poupança
+        document.getElementById('adicionar-poupanca').addEventListener('click', () => {
+            const data = document.getElementById('poupanca-data').value;
+            const tipo = document.getElementById('poupanca-tipo').value;
+            const valor = parseFloat(document.getElementById('poupanca-valor').value);
+            const descricao = document.getElementById('poupanca-descricao').value;
+            
+            if (data && tipo && valor) {
+                dados.poupanca.push({
+                    id: Date.now(),
+                    data,
+                    tipo,
+                    valor,
+                    descricao
+                });
+                
+                // Limpar campos
+                document.getElementById('poupanca-data').value = '';
+                document.getElementById('poupanca-tipo').value = '';
+                document.getElementById('poupanca-valor').value = '';
+                document.getElementById('poupanca-descricao').value = '';
+                
+                salvarDados();
+                atualizarListaPoupanca();
+                atualizarDashboard();
+            }
+        });
+
+        function atualizarListaPoupanca() {
+            const tbody = document.getElementById('poupanca-lista');
+            tbody.innerHTML = '';
+            
+            let saldoAtual = 0;
+            dados.poupanca.sort((a, b) => new Date(a.data) - new Date(b.data));
+            
+            dados.poupanca.forEach(mov => {
+                if (mov.tipo === 'Depósito') {
+                    saldoAtual += mov.valor;
+                } else {
+                    saldoAtual -= mov.valor;
+                }
+                
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="border border-gray-300 p-2">${formatarData(mov.data)}</td>
+                    <td class="border border-gray-300 p-2">${mov.tipo}</td>
+                    <td class="border border-gray-300 p-2">${formatarMoeda(mov.valor)}</td>
+                    <td class="border border-gray-300 p-2">${formatarMoeda(saldoAtual)}</td>
+                    <td class="border border-gray-300 p-2">${mov.descricao}</td>
+                    <td class="border border-gray-300 p-2">
+                        <button class="text-red-600 hover:text-red-800" onclick="removerPoupanca(${mov.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function removerPoupanca(id) {
+            if (confirm('Deseja realmente excluir esta movimentação?')) {
+                dados.poupanca = dados.poupanca.filter(mov => mov.id !== id);
+                salvarDados();
+                atualizarListaPoupanca();
+                atualizarDashboard();
+            }
+        }
+
+        // Metas
+        document.getElementById('adicionar-meta').addEventListener('click', () => {
+            const nome = document.getElementById('meta-nome').value;
+            const valorAlvo = parseFloat(document.getElementById('meta-valor-alvo').value);
+            const valorAtual = parseFloat(document.getElementById('meta-valor-atual').value) || 0;
+            const dataLimite = document.getElementById('meta-data-limite').value;
+            
+            if (nome && valorAlvo && dataLimite) {
+                dados.metas.push({
+                    id: Date.now(),
+                    nome,
+                    valorAlvo,
+                    valorAtual,
+                    dataLimite
+                });
+                
+                // Limpar campos
+                document.getElementById('meta-nome').value = '';
+                document.getElementById('meta-valor-alvo').value = '';
+                document.getElementById('meta-valor-atual').value = '';
+                document.getElementById('meta-data-limite').value = '';
+                
+                salvarDados();
+                atualizarListaMetas();
+            }
+        });
+
+        function atualizarListaMetas() {
+            const container = document.getElementById('metas-lista');
+            container.innerHTML = '';
+            
+            dados.metas.forEach(meta => {
+                const progresso = Math.min((meta.valorAtual / meta.valorAlvo) * 100, 100);
+                const div = document.createElement('div');
+                div.className = 'bg-gray-50 p-6 rounded-lg mb-4';
+                div.innerHTML = `
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-lg font-semibold">${meta.nome}</h4>
+                        <button class="text-red-600 hover:text-red-800" onclick="removerMeta(${meta.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <p class="text-sm text-gray-600">Valor Alvo: ${formatarMoeda(meta.valorAlvo)}</p>
+                            <p class="text-sm text-gray-600">Valor Atual: ${formatarMoeda(meta.valorAtual)}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Data Limite: ${formatarData(meta.dataLimite)}</p>
+                            <p class="text-sm text-gray-600">Progresso: ${progresso.toFixed(1)}%</p>
+                        </div>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
+                        <div class="progress-bar h-2 rounded-full" style="width: ${progresso}%"></div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600" onclick="adicionarValorMeta(${meta.id}, 100)">+100</button>
+                        <button class="bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600" onclick="adicionarValorMeta(${meta.id}, 500)">+500</button>
+                        <button class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600" onclick="adicionarValorMeta(${meta.id}, -100)">-100</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function adicionarValorMeta(id, valor) {
+            const meta = dados.metas.find(m => m.id === id);
+            if (meta) {
+                meta.valorAtual = Math.max(0, meta.valorAtual + valor);
+                salvarDados();
+                atualizarListaMetas();
+            }
+        }
+
+        function removerMeta(id) {
+            if (confirm('Deseja realmente excluir esta meta?')) {
+                dados.metas = dados.metas.filter(meta => meta.id !== id);
+                salvarDados();
+                atualizarListaMetas();
+            }
+        }
+
+        // Dashboard
+        function aplicarFiltros() {
+            const filtroAno = document.getElementById('filtro-ano').value;
+            const filtroMes = document.getElementById('filtro-mes').value;
+            const filtroCategoria = document.getElementById('filtro-categoria').value;
+            
+            return {
+                ano: filtroAno,
+                mes: filtroMes,
+                categoria: filtroCategoria
+            };
+        }
+
+        function atualizarDashboard() {
+            const filtros = aplicarFiltros();
+            
+            // Calcular totais
+            let rendaTotal = 0;
+            let totalPoupado = 0;
+            let totalGastos = 0;
+            
+            // Renda total
+            dados.rendas.forEach(renda => {
+                if ((!filtros.ano || renda.ano == filtros.ano) &&
+                    (!filtros.mes || renda.mes == filtros.mes)) {
+                    rendaTotal += renda.valor;
+                }
+            });
+            
+            // Total poupado
+            dados.poupanca.forEach(mov => {
+                const dataMovimento = new Date(mov.data);
+                if ((!filtros.ano || dataMovimento.getFullYear() == filtros.ano) &&
+                    (!filtros.mes || dataMovimento.getMonth() + 1 == filtros.mes)) {
+                    if (mov.tipo === 'Depósito') {
+                        totalPoupado += mov.valor;
+                    } else {
+                        totalPoupado -= mov.valor;
+                    }
+                }
+            });
+            
+            // Total gastos (variáveis)
+            dados.gastos.forEach(gasto => {
+                const dataGasto = new Date(gasto.data);
+                if ((!filtros.ano || dataGasto.getFullYear() == filtros.ano) &&
+                    (!filtros.mes || dataGasto.getMonth() + 1 == filtros.mes) &&
+                    (!filtros.categoria || gasto.categoria === filtros.categoria)) {
+                    totalGastos += gasto.valor;
+                }
+            });
+            
+            // Gastos fixos
+            dados.gastosFixos.forEach(fixo => {
+                const inicio = new Date(fixo.dataInicio);
+                const fim = new Date(fixo.dataFim);
+                
+                if ((!filtros.ano || (inicio.getFullYear() <= filtros.ano && fim.getFullYear() >= filtros.ano)) &&
+                    (!filtros.mes || (inicio.getMonth() + 1 <= filtros.mes && fim.getMonth() + 1 >= filtros.mes))) {
+                    totalGastos += fixo.valor;
+                }
+            });
+            
+            // Saldo atual (renda - poupança - gastos)
+            const saldoAtual = rendaTotal - totalPoupado - totalGastos;
+            
+            // Atualizar cards
+            document.getElementById('renda-total').textContent = formatarMoeda(rendaTotal);
+            document.getElementById('total-poupado').textContent = formatarMoeda(totalPoupado);
+            document.getElementById('total-gastos').textContent = formatarMoeda(totalGastos);
+            document.getElementById('saldo-atual').textContent = formatarMoeda(saldoAtual);
+            
+            // Atualizar gráficos
+            atualizarGraficos(filtros);
+        }
+
+        function atualizarGraficos(filtros) {
+            // Gráfico de gastos por categoria
+            const gastosPorCategoria = {};
+            dados.gastos.forEach(gasto => {
+                const dataGasto = new Date(gasto.data);
+                if ((!filtros.ano || dataGasto.getFullYear() == filtros.ano) &&
+                    (!filtros.mes || dataGasto.getMonth() + 1 == filtros.mes)) {
+                    gastosPorCategoria[gasto.categoria] = (gastosPorCategoria[gasto.categoria] || 0) + gasto.valor;
+                }
+            });
+            
+            const ctx1 = document.getElementById('gastosCategoriaChart').getContext('2d');
+            if (window.gastosCategoriaChart) {
+                window.gastosCategoriaChart.destroy();
+            }
+            window.gastosCategoriaChart = new Chart(ctx1, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(gastosPorCategoria),
+                    datasets: [{
+                        data: Object.values(gastosPorCategoria),
+                        backgroundColor: [
+                            '#FF6384',
+                            '#36A2EB',
+                            '#FFCE56',
+                            '#4BC0C0',
+                            '#9966FF',
+                            '#FF9F40',
+                            '#FF6384'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+            
+            // Gráfico de evolução da poupança
+            const evolucaoPoupanca = [];
+            let saldoAcumulado = 0;
+            dados.poupanca.sort((a, b) => new Date(a.data) - new Date(b.data));
+            
+            dados.poupanca.forEach(mov => {
+                const dataMovimento = new Date(mov.data);
+                if ((!filtros.ano || dataMovimento.getFullYear() == filtros.ano) &&
+                    (!filtros.mes || dataMovimento.getMonth() + 1 == filtros.mes)) {
+                    if (mov.tipo === 'Depósito') {
+                        saldoAcumulado += mov.valor;
+                    } else {
+                        saldoAcumulado -= mov.valor;
+                    }
+                    evolucaoPoupanca.push({
+                        data: formatarData(mov.data),
+                        valor: saldoAcumulado
+                    });
+                }
+            });
+            
+            const ctx2 = document.getElementById('evolucaoPoupancaChart').getContext('2d');
+            if (window.evolucaoPoupancaChart) {
+                window.evolucaoPoupancaChart.destroy();
+            }
+            window.evolucaoPoupancaChart = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: evolucaoPoupanca.map(e => e.data),
+                    datasets: [{
+                        label: 'Saldo da Poupança',
+                        data: evolucaoPoupanca.map(e => e.valor),
+                        borderColor: '#36A2EB',
+                        backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Event listeners
+        document.getElementById('aplicar-filtros').addEventListener('click', atualizarDashboard);
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            // Definir data de hoje nos campos de data
+            document.getElementById('gasto-data').value = obterDataHoje();
+            document.getElementById('poupanca-data').value = obterDataHoje();
+            
+            // Gerar anos
+            gerarAnos();
+            
+            // Atualizar listas
+            atualizarListaGastos();
+            atualizarListaGastosFixos();
+            atualizarListaRendas();
+            atualizarListaPoupanca();
+            atualizarListaMetas();
+            atualizarDashboard();
+        });
+    </script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDmpVRtQ7Xd16nop2vYv%2FeZRt6AA9ngMBTJSFtnMfpZ3w8ZQfFsGDAagTAnPN9ofKgklFWXTvi4%2FdD1Afzt0DyCybteemD8LuE5XJi0adp64HpIy7GV4WX7fIm9QiOJby3lHgVAcRS2B7nmsscQsN0ZXBmjZXeYKcuCLwYsegkFR8uK7WNZH%2FikOzAPgv09geKN3IazXPus7unyASZE1bhirrBJB%2FUP12hxCAYmK7yQ4M0%2FtNW%2BqajHFWGNdH0OGQCSrKMpHpwCHfwtUGTwS7m9lO2lGb%2Fsub1Qv9lSQihnBIePXyWh5EeAf7boyHAJUN0GhwNdGIlE2KsciPDO2Zt1ZsWbMBw0IuGEy9Xcx2ve4S%2B%2BMIP82nouHRd4UVfBjdCvWjSi3T%2BdUMkqH%2FsGiHJQds9Ii%2FvNHJ%2BHKbjfhxA5lIWSg%2Bb2Rt38msoMxSrD0tKfCMh%2B0uxRdbYMN98FLyxwkRd7rlUvlIn9EV2HpcwLJ8IOPMkmvbEFFCXUI8QeL9mKQW9FX9eKppmkutE7CpIzc%3D";
+        window.__genspark_locale = "pt-BR";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDmpVRtQ7Xd16nop2vYv/eZRt6AA9ngMBTJSFtnMfpZ3w8ZQfFsGDAagTAnPN9ofKgklFWXTvi4/dD1Afzt0DyCybteemD8LuE5XJi0adp64HpIy7GV4WX7fIm9QiOJby3lHgVAcRS2B7nmsscQsN0ZXBmjZXeYKcuCLwYsegkFR8uK7WNZH/ikOzAPgv09geKN3IazXPus7unyASZE1bhirrBJB/UP12hxCAYmK7yQ4M0/tNW+qajHFWGNdH0OGQCSrKMpHpwCHfwtUGTwS7m9lO2lGb/sub1Qv9lSQihnBIePXyWh5EeAf7boyHAJUN0GhwNdGIlE2KsciPDO2Zt1ZsWbMBw0IuGEy9Xcx2ve4S++MIP82nouHRd4UVfBjdCvWjSi3T+dUMkqH/sGiHJQds9Ii/vNHJ+HKbjfhxA5lIWSg+b2Rt38msoMxSrD0tKfCMh+0uxRdbYMN98FLyxwkRd7rlUvlIn9EV2HpcwLJ8IOPMkmvbEFFCXUI8QeL9mKQW9FX9eKppmkutE7CpIzc=";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    
