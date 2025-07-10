@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Controle Financeiro Familiar</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=un1a0suVZDPrlbW6jKB_8kn8O-e0Z9gEaeFaUW5dIvvP4eOyAzk1zE9W9u6yj48sp7u9T-1_3sfXOVD-WZEikzAAx_5iI4CNUbQdKayU2_-utsfKFkpscFLhk-L2T4Zc_EHi39wk1xzK2I9GD3jBXyIsK7IqGVIq61S-1MhnjYP0V3Da4w-zZFcObLTE6wQIr-aVX6ON5F780lo8hgamGIVAVtNemtm5FZM6XADITdXlOg2MMBY8AioxAmhBLMbtrAlwoXgnDeYDk_FVHCeNEeicIs5Z3lxf0feJRNDUpjWFeD2jy-MhJWFm2QM8M4IkXrUuwgWiRei_XjraNjDfIybrqpTKE_Jiyt94xGuq4Y_3G2MNa03sH33EMhsYA-rojVpnmtMrvH23LpVTFw1MhbcHmuJQZSyziD_-zwTkxrZNRGy_h6Pr0kHW9sXXnKjOJHRVe1JjGBseukSYFi_WFA" charset="UTF-8"></script><script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            opacity: 0.9;
+        }
+
+        .nav-tabs {
+            background: white;
+            padding: 0 2rem;
+            border-bottom: 2px solid #eee;
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .nav-tab:hover {
+            color: #667eea;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .filters h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 0.75rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(17, 153, 142, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .stat-card.income::before {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .stat-card.savings::before {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+
+        .stat-card.expenses::before {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+        }
+
+        .stat-card.balance::before {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .stat-card h3 {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .icon {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .chart-card h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .chart-container {
+            height: 300px;
+            width: 100%;
+        }
+
+        .form-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .form-card h3 {
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.75rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th {
+            background: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #555;
+            border-bottom: 2px solid #eee;
+        }
+
+        .table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .meta-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .meta-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .meta-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .meta-progress {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 8px;
+            background: #e1e5e9;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            transition: width 0.3s ease;
+        }
+
+        .meta-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .meta-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .meta-info-item {
+            text-align: center;
+        }
+
+        .meta-info-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.25rem;
+        }
+
+        .meta-info-value {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .nav-tabs {
+                padding: 0 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-chart-line"></i> Sistema de Controle Financeiro Familiar</h1>
+        <p>Gerencie suas finanças de forma inteligente e visual</p>
+    </div>
+
+    <div class="nav-tabs">
+        <button class="nav-tab active" onclick="showTab('dashboard')">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+        </button>
+        <button class="nav-tab" onclick="showTab('gastos')">
+            <i class="fas fa-shopping-cart"></i> Gastos
+        </button>
+        <button class="nav-tab" onclick="showTab('gastos-fixos')">
+            <i class="fas fa-home"></i> Gastos Fixos
+        </button>
+        <button class="nav-tab" onclick="showTab('rendas')">
+            <i class="fas fa-dollar-sign"></i> Rendas
+        </button>
+        <button class="nav-tab" onclick="showTab('poupanca')">
+            <i class="fas fa-piggy-bank"></i> Poupança
+        </button>
+        <button class="nav-tab" onclick="showTab('metas')">
+            <i class="fas fa-target"></i> Metas
+        </button>
+    </div>
+
+    <div class="container">
+        <!-- Dashboard -->
+        <div id="dashboard" class="tab-content active">
+            <div class="filters">
+                <h3>Filtros</h3>
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label>Ano</label>
+                        <select id="filterYear">
+                            <option value="">Todos</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Mês</label>
+                        <select id="filterMonth">
+                            <option value="">Todos</option>
+                            <option value="1">Janeiro</option>
+                            <option value="2">Fevereiro</option>
+                            <option value="3">Março</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Maio</option>
+                            <option value="6">Junho</option>
+                            <option value="7">Julho</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Setembro</option>
+                            <option value="10">Outubro</option>
+                            <option value="11">Novembro</option>
+                            <option value="12">Dezembro</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Categoria</label>
+                        <select id="filterCategory">
+                            <option value="">Todas</option>
+                            <option value="Alimentação">Alimentação</option>
+                            <option value="Transporte">Transporte</option>
+                            <option value="Moradia">Moradia</option>
+                            <option value="Lazer">Lazer</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Educação">Educação</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <button class="btn btn-primary" onclick="applyFilters()">
+                            <i class="fas fa-filter"></i> Aplicar Filtros
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card income">
+                    <h3>Renda Total</h3>
+                    <div class="value" id="totalIncome">R$ 0,00</div>
+                    <i class="fas fa-arrow-up icon"></i>
+                </div>
+                <div class="stat-card savings">
+                    <h3>Total Poupado</h3>
+                    <div class="value" id="totalSavings">R$ 0,00</div>
+                    <i class="fas fa-piggy-bank icon"></i>
+                </div>
+                <div class="stat-card expenses">
+                    <h3>Total Gastos</h3>
+                    <div class="value" id="totalExpenses">R$ 0,00</div>
+                    <i class="fas fa-shopping-cart icon"></i>
+                </div>
+                <div class="stat-card balance">
+                    <h3>Saldo Atual</h3>
+                    <div class="value" id="currentBalance">R$ 0,00</div>
+                    <i class="fas fa-wallet icon"></i>
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3>Gastos por Categoria</h3>
+                    <div id="categoryChart" class="chart-container"></div>
+                </div>
+                <div class="chart-card">
+                    <h3>Evolução da Poupança</h3>
+                    <div id="savingsChart" class="chart-container"></div>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <h3>Gastos Fixos vs Variáveis</h3>
+                <div id="expensesChart" class="chart-container"></div>
+            </div>
+        </div>
+
+        <!-- Gastos -->
+        <div id="gastos" class="tab-content">
+            <div class="form-card">
+                <h3>Adicionar Gasto</h3>
+                <form id="gastosForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Data</label>
+                            <input type="date" id="gastoData" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Descrição</label>
+                            <input type="text" id="gastoDescricao" placeholder="Descrição do gasto" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Categoria</label>
+                            <select id="gastoCategoria" required>
+                                <option value="">Selecione</option>
+                                <option value="Alimentação">Alimentação</option>
+                                <option value="Transporte">Transporte</option>
+                                <option value="Moradia">Moradia</option>
+                                <option value="Lazer">Lazer</option>
+                                <option value="Saúde">Saúde</option>
+                                <option value="Educação">Educação</option>
+                                <option value="Outros">Outros</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Valor</label>
+                            <input type="number" step="0.01" id="gastoValor" placeholder="0,00" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Forma de Pagamento</label>
+                            <select id="gastoFormaPagamento" required>
+                                <option value="">Selecione</option>
+                                <option value="Dinheiro">Dinheiro</option>
+                                <option value="Cartão de Crédito">Cartão de Crédito</option>
+                                <option value="Cartão de Débito">Cartão de Débito</option>
+                                <option value="Transferência">Transferência</option>
+                                <option value="Boleto">Boleto</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-plus"></i> Adicionar Gasto
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Descrição</th>
+                            <th>Categoria</th>
+                            <th>Valor</th>
+                            <th>Forma de Pagamento</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gastosTable">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Gastos Fixos -->
+        <div id="gastos-fixos" class="tab-content">
+            <div class="form-card">
+                <h3>Adicionar Gasto Fixo</h3>
+                <form id="gastosFixosForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Item</label>
+                            <input type="text" id="gastoFixoItem" placeholder="Nome do gasto fixo" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Valor Mensal</label>
+                            <input type="number" step="0.01" id="gastoFixoValor" placeholder="0,00" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Data de Início</label>
+                            <input type="date" id="gastoFixoInicio" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Data de Fim</label>
+                            <input type="date" id="gastoFixoFim">
+                        </div>
+                        <div class="form-group">
+                            <label>Observações</label>
+                            <input type="text" id="gastoFixoObs" placeholder="Observações opcionais">
+                        </div>
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-plus"></i> Adicionar Gasto Fixo
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Valor Mensal</th>
+                            <th>Data de Início</th>
+                            <th>Data de Fim</th>
+                            <th>Observações</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gastosFixosTable">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Rendas -->
+        <div id="rendas" class="tab-content">
+            <div class="form-card">
+                <h3>Adicionar Renda</h3>
+                <form id="rendasForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Mês</label>
+                            <select id="rendaMes" required>
+                                <option value="">Selecione</option>
+                                <option value="1">Janeiro</option>
+                                <option value="2">Fevereiro</option>
+                                <option value="3">Março</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Maio</option>
+                                <option value="6">Junho</option>
+                                <option value="7">Julho</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Setembro</option>
+                                <option value="10">Outubro</option>
+                                <option value="11">Novembro</option>
+                                <option value="12">Dezembro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Ano</label>
+                            <select id="rendaAno" required>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo de Renda</label>
+                            <select id="rendaTipo" required>
+                                <option value="">Selecione</option>
+                                <option value="Salário Titular">Salário Titular</option>
+                                <option value="Salário Cônjuge">Salário Cônjuge</option>
+                                <option value="Freelance">Freelance</option>
+                                <option value="Investimentos">Investimentos</option>
+                                <option value="Bonificação">Bonificação</option>
+                                <option value="Outros">Outros</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Valor</label>
+                            <input type="number" step="0.01" id="rendaValor" placeholder="0,00" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Descrição</label>
+                            <input type="text" id="rendaDescricao" placeholder="Descrição opcional">
+                        </div>
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-plus"></i> Adicionar Renda
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Mês/Ano</th>
+                            <th>Tipo</th>
+                            <th>Valor</th>
+                            <th>Descrição</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rendasTable">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Poupança -->
+        <div id="poupanca" class="tab-content">
+            <div class="form-card">
+                <h3>Adicionar Movimentação</h3>
+                <form id="poupancaForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Data</label>
+                            <input type="date" id="poupancaData" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo</label>
+                            <select id="poupancaTipo" required>
+                                <option value="">Selecione</option>
+                                <option value="Depósito">Depósito</option>
+                                <option value="Retirada">Retirada</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Valor</label>
+                            <input type="number" step="0.01" id="poupancaValor" placeholder="0,00" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Descrição</label>
+                            <input type="text" id="poupancaDescricao" placeholder="Descrição opcional">
+                        </div>
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-plus"></i> Adicionar Movimentação
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Tipo</th>
+                            <th>Valor</th>
+                            <th>Saldo</th>
+                            <th>Descrição</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="poupancaTable">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Metas -->
+        <div id="metas" class="tab-content">
+            <div class="form-card">
+                <h3>Adicionar Meta</h3>
+                <form id="metasForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nome da Meta</label>
+                            <input type="text" id="metaNome" placeholder="Ex: Viagem de férias" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Valor Alvo</label>
+                            <input type="number" step="0.01" id="metaValorAlvo" placeholder="0,00" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Valor Atual</label>
+                            <input type="number" step="0.01" id="metaValorAtual" placeholder="0,00" value="0">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Data Limite</label>
+                            <input type="date" id="metaDataLimite" required>
+                        </div>
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-plus"></i> Adicionar Meta
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div id="metasContainer">
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para confirmação -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirmar Exclusão</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir este item? Esta ação não pode ser desfeita.</p>
+            </div>
+            <div class="modal-footer" style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1rem;">
+                <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+                <button class="btn btn-danger" onclick="confirmDelete()">Excluir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para adicionar valor à meta -->
+    <div id="addValueModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Adicionar Valor à Meta</h3>
+                <button class="modal-close" onclick="closeAddValueModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Valor a Adicionar</label>
+                    <input type="number" step="0.01" id="addValueAmount" placeholder="0,00">
+                </div>
+            </div>
+            <div class="modal-footer" style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1rem;">
+                <button class="btn btn-secondary" onclick="closeAddValueModal()">Cancelar</button>
+                <button class="btn btn-success" onclick="confirmAddValue()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variáveis globais
+        let data = {
+            gastos: [],
+            gastosFixos: [],
+            rendas: [],
+            poupanca: [],
+            metas: []
+        };
+
+        let deleteCallback = null;
+        let currentMetaId = null;
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            initializeDates();
+            initializeYears();
+            setupEventListeners();
+            updateDashboard();
+            google.charts.load('current', {'packages':['corechart', 'line']});
+            google.charts.setOnLoadCallback(drawCharts);
+        });
+
+        // Carregar dados do localStorage
+        function loadData() {
+            const savedData = localStorage.getItem('financeData');
+            if (savedData) {
+                data = JSON.parse(savedData);
+            }
+        }
+
+        // Salvar dados no localStorage
+        function saveData() {
+            localStorage.setItem('financeData', JSON.stringify(data));
+        }
+
+        // Inicializar datas
+        function initializeDates() {
+            const today = new Date();
+            const todayString = today.toISOString().split('T')[0];
+            
+            // Definir data padrão nos campos
+            document.getElementById('gastoData').value = todayString;
+            document.getElementById('poupancaData').value = todayString;
+            document.getElementById('gastoFixoInicio').value = todayString;
+            document.getElementById('metaDataLimite').value = todayString;
+        }
+
+        // Inicializar anos
+        function initializeYears() {
+            const currentYear = new Date().getFullYear();
+            const filterYear = document.getElementById('filterYear');
+            const rendaAno = document.getElementById('rendaAno');
+            
+            // Limpar opções existentes
+            filterYear.innerHTML = '<option value="">Todos</option>';
+            rendaAno.innerHTML = '';
+            
+            // Adicionar 10 anos a partir do ano atual
+            for (let year = currentYear; year <= currentYear + 10; year++) {
+                const option1 = document.createElement('option');
+                option1.value = year;
+                option1.textContent = year;
+                filterYear.appendChild(option1);
+                
+                const option2 = document.createElement('option');
+                option2.value = year;
+                option2.textContent = year;
+                rendaAno.appendChild(option2);
+            }
+            
+            // Definir ano atual como padrão
+            rendaAno.value = currentYear;
+        }
+
+        // Configurar event listeners
+        function setupEventListeners() {
+            document.getElementById('gastosForm').addEventListener('submit', addGasto);
+            document.getElementById('gastosFixosForm').addEventListener('submit', addGastoFixo);
+            document.getElementById('rendasForm').addEventListener('submit', addRenda);
+            document.getElementById('poupancaForm').addEventListener('submit', addPoupanca);
+            document.getElementById('metasForm').addEventListener('submit', addMeta);
+        }
+
+        // Navegação entre abas
+        function showTab(tabName) {
+            // Remover classe active de todas as abas
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Adicionar classe active à aba selecionada
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            // Atualizar tabelas
+            updateTables();
+            
+            // Redesenhar gráficos se for dashboard
+            if (tabName === 'dashboard') {
+                setTimeout(() => {
+                    drawCharts();
+                }, 100);
+            }
+        }
+
+        // Aplicar filtros
+        function applyFilters() {
+            updateDashboard();
+            drawCharts();
+        }
+
+        // Adicionar gasto
+        function addGasto(e) {
+            e.preventDefault();
+            
+            const gasto = {
+                id: Date.now(),
+                data: document.getElementById('gastoData').value,
+                descricao: document.getElementById('gastoDescricao').value,
+                categoria: document.getElementById('gastoCategoria').value,
+                valor: parseFloat(document.getElementById('gastoValor').value),
+                formaPagamento: document.getElementById('gastoFormaPagamento').value
+            };
+            
+            data.gastos.push(gasto);
+            saveData();
+            updateTables();
+            updateDashboard();
+            drawCharts();
+            
+            // Limpar formulário
+            document.getElementById('gastosForm').reset();
+            initializeDates();
+            
+            showAlert('Gasto adicionado com sucesso!', 'success');
+        }
+
+        // Adicionar gasto fixo
+        function addGastoFixo(e) {
+            e.preventDefault();
+            
+            const gastoFixo = {
+                id: Date.now(),
+                item: document.getElementById('gastoFixoItem').value,
+                valor: parseFloat(document.getElementById('gastoFixoValor').value),
+                dataInicio: document.getElementById('gastoFixoInicio').value,
+                dataFim: document.getElementById('gastoFixoFim').value,
+                observacoes: document.getElementById('gastoFixoObs').value
+            };
+            
+            data.gastosFixos.push(gastoFixo);
+            saveData();
+            updateTables();
+            updateDashboard();
+            drawCharts();
+            
+            // Limpar formulário
+            document.getElementById('gastosFixosForm').reset();
+            initializeDates();
+            
+            showAlert('Gasto fixo adicionado com sucesso!', 'success');
+        }
+
+        // Adicionar renda
+        function addRenda(e) {
+            e.preventDefault();
+            
+            const renda = {
+                id: Date.now(),
+                mes: document.getElementById('rendaMes').value,
+                ano: document.getElementById('rendaAno').value,
+                tipo: document.getElementById('rendaTipo').value,
+                valor: parseFloat(document.getElementById('rendaValor').value),
+                descricao: document.getElementById('rendaDescricao').value
+            };
+            
+            data.rendas.push(renda);
+            saveData();
+            updateTables();
+            updateDashboard();
+            drawCharts();
+            
+            // Limpar formulário
+            document.getElementById('rendasForm').reset();
+            initializeYears();
+            
+            showAlert('Renda adicionada com sucesso!', 'success');
+        }
+
+        // Adicionar poupança
+        function addPoupanca(e) {
+            e.preventDefault();
+            
+            const poupanca = {
+                id: Date.now(),
+                data: document.getElementById('poupancaData').value,
+                tipo: document.getElementById('poupancaTipo').value,
+                valor: parseFloat(document.getElementById('poupancaValor').value),
+                descricao: document.getElementById('poupancaDescricao').value
+            };
+            
+            data.poupanca.push(poupanca);
+            saveData();
+            updateTables();
+            updateDashboard();
+            drawCharts();
+            
+            // Limpar formulário
+            document.getElementById('poupancaForm').reset();
+            initializeDates();
+            
+            showAlert('Movimentação adicionada com sucesso!', 'success');
+        }
+
+        // Adicionar meta
+        function addMeta(e) {
+            e.preventDefault();
+            
+            const meta = {
+                id: Date.now(),
+                nome: document.getElementById('metaNome').value,
+                valorAlvo: parseFloat(document.getElementById('metaValorAlvo').value),
+                valorAtual: parseFloat(document.getElementById('metaValorAtual').value),
+                dataLimite: document.getElementById('metaDataLimite').value
+            };
+            
+            data.metas.push(meta);
+            saveData();
+            updateTables();
+            updateDashboard();
+            
+            // Limpar formulário
+            document.getElementById('metasForm').reset();
+            initializeDates();
+            
+            showAlert('Meta adicionada com sucesso!', 'success');
+        }
+
+        // Atualizar tabelas
+        function updateTables() {
+            updateGastosTable();
+            updateGastosFixosTable();
+            updateRendasTable();
+            updatePoupancaTable();
+            updateMetasTable();
+        }
+
+        // Atualizar tabela de gastos
+        function updateGastosTable() {
+            const tbody = document.getElementById('gastosTable');
+            tbody.innerHTML = '';
+            
+            // Adicionar gastos fixos automaticamente
+            const gastosComFixos = [...data.gastos];
+            
+            data.gastosFixos.forEach(gastoFixo => {
+                const dataInicio = new Date(gastoFixo.dataInicio);
+                const dataFim = gastoFixo.dataFim ? new Date(gastoFixo.dataFim) : null;
+                const hoje = new Date();
+                
+                if (dataInicio <= hoje && (!dataFim || dataFim >= hoje)) {
+                    const primeiroDiaMes = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+                    gastosComFixos.push({
+                        id: `fixo-${gastoFixo.id}`,
+                        data: primeiroDiaMes.toISOString().split('T')[0],
+                        descricao: gastoFixo.item,
+                        categoria: 'Moradia',
+                        valor: gastoFixo.valor,
+                        formaPagamento: 'Fixo',
+                        isFixo: true
+                    });
+                }
+            });
+            
+            gastosComFixos.sort((a, b) => new Date(b.data) - new Date(a.data));
+            
+            gastosComFixos.forEach(gasto => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${formatDate(gasto.data)}</td>
+                    <td>${gasto.descricao}</td>
+                    <td>${gasto.categoria}</td>
+                    <td>${formatCurrency(gasto.valor)}</td>
+                    <td>${gasto.formaPagamento}</td>
+                    <td>
+                        <div class="action-buttons">
+                            ${!gasto.isFixo ? `<button class="btn btn-danger btn-sm" onclick="deleteItem('gastos', ${gasto.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>` : '<span class="badge">Fixo</span>'}
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Atualizar tabela de gastos fixos
+        function updateGastosFixosTable() {
+            const tbody = document.getElementById('gastosFixosTable');
+            tbody.innerHTML = '';
+            
+            data.gastosFixos.forEach(gastoFixo => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${gastoFixo.item}</td>
+                    <td>${formatCurrency(gastoFixo.valor)}</td>
+                    <td>${formatDate(gastoFixo.dataInicio)}</td>
+                    <td>${gastoFixo.dataFim ? formatDate(gastoFixo.dataFim) : '-'}</td>
+                    <td>${gastoFixo.observacoes || '-'}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-danger btn-sm" onclick="deleteItem('gastosFixos', ${gastoFixo.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Atualizar tabela de rendas
+        function updateRendasTable() {
+            const tbody = document.getElementById('rendasTable');
+            tbody.innerHTML = '';
+            
+            data.rendas.sort((a, b) => {
+                if (a.ano !== b.ano) return b.ano - a.ano;
+                return b.mes - a.mes;
+            });
+            
+            data.rendas.forEach(renda => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${getMonthName(renda.mes)}/${renda.ano}</td>
+                    <td>${renda.tipo}</td>
+                    <td>${formatCurrency(renda.valor)}</td>
+                    <td>${renda.descricao || '-'}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-danger btn-sm" onclick="deleteItem('rendas', ${renda.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Atualizar tabela de poupança
+        function updatePoupancaTable() {
+            const tbody = document.getElementById('poupancaTable');
+            tbody.innerHTML = '';
+            
+            data.poupanca.sort((a, b) => new Date(b.data) - new Date(a.data));
+            
+            let saldoAcumulado = 0;
+            const poupancaComSaldo = data.poupanca.map(p => {
+                if (p.tipo === 'Depósito') {
+                    saldoAcumulado += p.valor;
+                } else {
+                    saldoAcumulado -= p.valor;
+                }
+                return { ...p, saldoAcumulado };
+            });
+            
+            poupancaComSaldo.reverse().forEach(poupanca => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${formatDate(poupanca.data)}</td>
+                    <td>${poupanca.tipo}</td>
+                    <td>${formatCurrency(poupanca.valor)}</td>
+                    <td>${formatCurrency(poupanca.saldoAcumulado)}</td>
+                    <td>${poupanca.descricao || '-'}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-danger btn-sm" onclick="deleteItem('poupanca', ${poupanca.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Atualizar tabela de metas
+        function updateMetasTable() {
+            const container = document.getElementById('metasContainer');
+            container.innerHTML = '';
+            
+            data.metas.forEach(meta => {
+                const progresso = (meta.valorAtual / meta.valorAlvo) * 100;
+                const status = progresso >= 100 ? 'Concluída' : new Date(meta.dataLimite) < new Date() ? 'Atrasada' : 'Em Progresso';
+                
+                const div = document.createElement('div');
+                div.className = 'meta-card';
+                div.innerHTML = `
+                    <div class="meta-header">
+                        <div class="meta-title">${meta.nome}</div>
+                        <div class="action-buttons">
+                            <button class="btn btn-success btn-sm" onclick="openAddValueModal(${meta.id})">
+                                <i class="fas fa-plus"></i> +100
+                            </button>
+                            <button class="btn btn-warning btn-sm" onclick="openAddValueModal(${meta.id})">
+                                <i class="fas fa-plus"></i> +500
+                            </button>
+                            <button class="btn btn-info btn-sm" onclick="openAddValueModal(${meta.id})">
+                                <i class="fas fa-plus"></i> +1000
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteItem('metas', ${meta.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="meta-info">
+                        <div class="meta-info-item">
+                            <div class="meta-info-label">Valor Alvo</div>
+                            <div class="meta-info-value">${formatCurrency(meta.valorAlvo)}</div>
+                        </div>
+                        <div class="meta-info-item">
+                            <div class="meta-info-label">Valor Atual</div>
+                            <div class="meta-info-value">${formatCurrency(meta.valorAtual)}</div>
+                        </div>
+                        <div class="meta-info-item">
+                            <div class="meta-info-label">Data Limite</div>
+                            <div class="meta-info-value">${formatDate(meta.dataLimite)}</div>
+                        </div>
+                        <div class="meta-info-item">
+                            <div class="meta-info-label">Progresso</div>
+                            <div class="meta-info-value">${progresso.toFixed(1)}%</div>
+                        </div>
+                    </div>
+                    <div class="meta-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${Math.min(progresso, 100)}%"></div>
+                        </div>
+                        <span>${status}</span>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Atualizar dashboard
+        function updateDashboard() {
+            const filters = getFilters();
+            const filteredData = applyFiltersToData(filters);
+            
+            const totalIncome = calculateTotalIncome(filteredData);
+            const totalSavings = calculateTotalSavings(filteredData);
+            const totalExpenses = calculateTotalExpenses(filteredData);
+            const currentBalance = totalIncome - totalSavings - totalExpenses;
+            
+            document.getElementById('totalIncome').textContent = formatCurrency(totalIncome);
+            document.getElementById('totalSavings').textContent = formatCurrency(totalSavings);
+            document.getElementById('totalExpenses').textContent = formatCurrency(totalExpenses);
+            document.getElementById('currentBalance').textContent = formatCurrency(currentBalance);
+        }
+
+        // Obter filtros
+        function getFilters() {
+            return {
+                year: document.getElementById('filterYear').value,
+                month: document.getElementById('filterMonth').value,
+                category: document.getElementById('filterCategory').value
+            };
+        }
+
+        // Aplicar filtros aos dados
+        function applyFiltersToData(filters) {
+            const filtered = {
+                gastos: data.gastos.filter(item => {
+                    const date = new Date(item.data);
+                    const year = date.getFullYear().toString();
+                    const month = (date.getMonth() + 1).toString();
+                    
+                    return (!filters.year || year === filters.year) &&
+                           (!filters.month || month === filters.month) &&
+                           (!filters.category || item.categoria === filters.category);
+                }),
+                rendas: data.rendas.filter(item => {
+                    return (!filters.year || item.ano === filters.year) &&
+                           (!filters.month || item.mes === filters.month);
+                }),
+                poupanca: data.poupanca.filter(item => {
+                    const date = new Date(item.data);
+                    const year = date.getFullYear().toString();
+                    const month = (date.getMonth() + 1).toString();
+                    
+                    return (!filters.year || year === filters.year) &&
+                           (!filters.month || month === filters.month);
+                }),
+                gastosFixos: data.gastosFixos,
+                metas: data.metas
+            };
+            
+            return filtered;
+        }
+
+        // Calcular renda total
+        function calculateTotalIncome(filteredData) {
+            return filteredData.rendas.reduce((total, renda) => total + renda.valor, 0);
+        }
+
+        // Calcular total poupado
+        function calculateTotalSavings(filteredData) {
+            return filteredData.poupanca.reduce((total, poupanca) => {
+                return poupanca.tipo === 'Depósito' ? total + poupanca.valor : total - poupanca.valor;
+            }, 0);
+        }
+
+        // Calcular total de gastos
+        function calculateTotalExpenses(filteredData) {
+            const gastosVariaveis = filteredData.gastos.reduce((total, gasto) => total + gasto.valor, 0);
+            const gastosFixos = filteredData.gastosFixos.reduce((total, gasto) => total + gasto.valor, 0);
+            return gastosVariaveis + gastosFixos;
+        }
+
+        // Desenhar gráficos
+        function drawCharts() {
+            drawCategoryChart();
+            drawSavingsChart();
+            drawExpensesChart();
+        }
+
+        // Gráfico de gastos por categoria
+        function drawCategoryChart() {
+            const filters = getFilters();
+            const filteredData = applyFiltersToData(filters);
+            
+            const categoryData = {};
+            filteredData.gastos.forEach(gasto => {
+                categoryData[gasto.categoria] = (categoryData[gasto.categoria] || 0) + gasto.valor;
+            });
+            
+            const chartData = [['Categoria', 'Valor']];
+            Object.entries(categoryData).forEach(([categoria, valor]) => {
+                chartData.push([categoria, valor]);
+            });
+            
+            const dataTable = google.visualization.arrayToDataTable(chartData);
+            
+            const options = {
+                title: '',
+                pieHole: 0.4,
+                colors: ['#667eea', '#764ba2', '#11998e', '#38ef7d', '#ff6b6b', '#ee5a52', '#4facfe'],
+                legend: { position: 'bottom' },
+                chartArea: { width: '90%', height: '80%' }
+            };
+            
+            const chart = new google.visualization.PieChart(document.getElementById('categoryChart'));
+            chart.draw(dataTable, options);
+        }
+
+        // Gráfico de evolução da poupança
+        function drawSavingsChart() {
+            const filters = getFilters();
+            const filteredData = applyFiltersToData(filters);
+            
+            const chartData = [['Data', 'Saldo']];
+            let saldoAcumulado = 0;
+            
+            filteredData.poupanca.sort((a, b) => new Date(a.data) - new Date(b.data));
+            
+            filteredData.poupanca.forEach(poupanca => {
+                if (poupanca.tipo === 'Depósito') {
+                    saldoAcumulado += poupanca.valor;
+                } else {
+                    saldoAcumulado -= poupanca.valor;
+                }
+                chartData.push([new Date(poupanca.data), saldoAcumulado]);
+            });
+            
+            if (chartData.length === 1) {
+                chartData.push([new Date(), 0]);
+            }
+            
+            const dataTable = google.visualization.arrayToDataTable(chartData);
+            
+            const options = {
+                title: '',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                colors: ['#11998e'],
+                chartArea: { width: '90%', height: '80%' },
+                hAxis: { format: 'dd/MM/yy' },
+                vAxis: { format: 'currency' }
+            };
+            
+            const chart = new google.visualization.LineChart(document.getElementById('savingsChart'));
+            chart.draw(dataTable, options);
+        }
+
+        // Gráfico de gastos fixos vs variáveis
+        function drawExpensesChart() {
+            const filters = getFilters();
+            const filteredData = applyFiltersToData(filters);
+            
+            const gastosVariaveis = filteredData.gastos.reduce((total, gasto) => total + gasto.valor, 0);
+            const gastosFixos = filteredData.gastosFixos.reduce((total, gasto) => total + gasto.valor, 0);
+            
+            const chartData = [
+                ['Tipo', 'Valor'],
+                ['Gastos Variáveis', gastosVariaveis],
+                ['Gastos Fixos', gastosFixos]
+            ];
+            
+            const dataTable = google.visualization.arrayToDataTable(chartData);
+            
+            const options = {
+                title: '',
+                colors: ['#ff6b6b', '#4facfe'],
+                legend: { position: 'bottom' },
+                chartArea: { width: '90%', height: '80%' },
+                bar: { groupWidth: '75%' }
+            };
+            
+            const chart = new google.visualization.ColumnChart(document.getElementById('expensesChart'));
+            chart.draw(dataTable, options);
+        }
+
+        // Excluir item
+        function deleteItem(type, id) {
+            deleteCallback = () => {
+                const index = data[type].findIndex(item => item.id === id);
+                if (index > -1) {
+                    data[type].splice(index, 1);
+                    saveData();
+                    updateTables();
+                    updateDashboard();
+                    drawCharts();
+                    showAlert('Item excluído com sucesso!', 'success');
+                }
+            };
+            
+            document.getElementById('confirmModal').classList.add('active');
+        }
+
+        // Confirmar exclusão
+        function confirmDelete() {
+            if (deleteCallback) {
+                deleteCallback();
+                deleteCallback = null;
+            }
+            closeModal();
+        }
+
+        // Fechar modal
+        function closeModal() {
+            document.getElementById('confirmModal').classList.remove('active');
+        }
+
+        // Abrir modal para adicionar valor à meta
+        function openAddValueModal(metaId) {
+            currentMetaId = metaId;
+            document.getElementById('addValueModal').classList.add('active');
+        }
+
+        // Fechar modal de adicionar valor
+        function closeAddValueModal() {
+            document.getElementById('addValueModal').classList.remove('active');
+            currentMetaId = null;
+        }
+
+        // Confirmar adição de valor
+        function confirmAddValue() {
+            const amount = parseFloat(document.getElementById('addValueAmount').value);
+            if (amount && currentMetaId) {
+                const meta = data.metas.find(m => m.id === currentMetaId);
+                if (meta) {
+                    meta.valorAtual += amount;
+                    saveData();
+                    updateTables();
+                    updateDashboard();
+                    showAlert('Valor adicionado à meta!', 'success');
+                }
+            }
+            closeAddValueModal();
+        }
+
+        // Funções utilitárias
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(value);
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('pt-BR');
+        }
+
+        function getMonthName(monthNumber) {
+            const months = [
+                'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+                'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'
+            ];
+            return months[monthNumber - 1];
+        }
+
+        function showAlert(message, type) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            
+            document.body.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 3000);
+        }
+
+        // Redimensionar gráficos quando a janela for redimensionada
+        window.addEventListener('resize', () => {
+            setTimeout(() => {
+                if (document.getElementById('dashboard').classList.contains('active')) {
+                    drawCharts();
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDoc6ZXc%2FE7cIRND%2F1ohd%2FFGxEZijTO4mQkRFSOO51SJtpWTldUxW0S2wZGV1LhVvhrwhV0v4XhVvTbgE4sITZXkQOo9lft1RG%2F8L6FUQSXwNdHpZFLj7bjTbwmHyeDF1OQ%2BDyw4hJhT0Y7g6vOPAk5J3Z%2BtbW4epcuTL6pMshj5wFDiXbYxj9OHWohz1%2B2Fi8pIT7RCq1%2BvZMkcqLse7iKB9WFvm0mlIybSYLEPZFVrvch4gqXj8N7pOigoa%2F42FMuNwupIpmRPJTV19aTrUO3rfkSjFBZ4NXrwDAsUkTchqhLGdyeLzEmnRHKukQ2tWStn6MVSzmkft2qXJoctKFrxHurkZxAESh1kgmVsU%2FQ%2BCPvvK5ilkIbXqDdh%2BccCHR46yK5iDLT6BjLjwtxy%2FZPwmfdsJ5HcZJacyHqEfBCqHFXT2zzNuIuo1MLrkFAdmI5B8kzyOh4pWLSHTRiuwSWEZaZXA4Oj8Ggc1aQzI900QpsOj5xfKHeU4ri84%2F4eGyzLR01LAjGgFnqDMMzZkMFU%3D";
+        window.__genspark_locale = "pt-BR";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDoc6ZXc/E7cIRND/1ohd/FGxEZijTO4mQkRFSOO51SJtpWTldUxW0S2wZGV1LhVvhrwhV0v4XhVvTbgE4sITZXkQOo9lft1RG/8L6FUQSXwNdHpZFLj7bjTbwmHyeDF1OQ+Dyw4hJhT0Y7g6vOPAk5J3Z+tbW4epcuTL6pMshj5wFDiXbYxj9OHWohz1+2Fi8pIT7RCq1+vZMkcqLse7iKB9WFvm0mlIybSYLEPZFVrvch4gqXj8N7pOigoa/42FMuNwupIpmRPJTV19aTrUO3rfkSjFBZ4NXrwDAsUkTchqhLGdyeLzEmnRHKukQ2tWStn6MVSzmkft2qXJoctKFrxHurkZxAESh1kgmVsU/Q+CPvvK5ilkIbXqDdh+ccCHR46yK5iDLT6BjLjwtxy/ZPwmfdsJ5HcZJacyHqEfBCqHFXT2zzNuIuo1MLrkFAdmI5B8kzyOh4pWLSHTRiuwSWEZaZXA4Oj8Ggc1aQzI900QpsOj5xfKHeU4ri84/4eGyzLR01LAjGgFnqDMMzZkMFU=";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    
